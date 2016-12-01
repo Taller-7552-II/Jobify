@@ -1,0 +1,10 @@
+#ifndef NOTIFICATIONS_H_INCLUDED
+#define NOTIFICATIONS_H_INCLUDED
+
+typedef enum NotifType{
+    N_CHAT,
+    N_ADD_FRIEND,
+    N_DELETE_FRIEND
+} NotifType;
+
+#endif // NOTIFICATIONS_H_INCLUDED
