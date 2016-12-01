@@ -129,3 +129,14 @@ Se debe estar situado en la carpeta server. Para correr el coverage se debe habe
    $ ./build.sh
    $ sudo ./install_coveralls
    $ ./run_coverage.sh
+
+Generar documentacion html con doxygen
+------------------------------------------------------------------------------------------------------------
+Se debe estar situado en la carpeta server/src. Va a generar una carpeta html (donde hay que abrir el index.html) y una carpeta con la documentacion en latex (para pasarlo a un pdf, hay que hacer " $ make pdf " en consola)
+
+.. code-block:: bash
+   
+   $ sudo apt-get install doxygen
+   $ doxygen Doxyfile
+ 
+
