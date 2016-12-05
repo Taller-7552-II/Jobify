@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Administración &#8212; Jobify 2.4.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.4.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Jobify 2.4.2 documentation" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="administracion">
+<h1>Administración<a class="headerlink" href="#administracion" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="manual-de-instalacion">
+<h2>Manual de instalación<a class="headerlink" href="#manual-de-instalacion" title="Permalink to this headline">¶</a></h2>
+<p>La aplicación Jobify está pensada para correr en linux 64 bits. A su vez se requieren tener ciertas librerías y programas instalados.
+Por esto se pueden proseguir dos métodos distintos con la intención de ejecutar el servidor.
+Si se desea instalar las librerías y programas sobre el equipo y luego correr el servidor sobre estas instalaciones se puede seguir la guía de instalación sobre el equipo.</p>
+</div>
+<div class="section" id="instalacion-en-equipo">
+<h2>Instalación en Equipo<a class="headerlink" href="#instalacion-en-equipo" title="Permalink to this headline">¶</a></h2>
+<p>La aplicación Jobify está pensada para correr en linux 64 bits. A su vez se requieren tener ciertas librerías y programas instalados.
+Esta guía de instalación detalla como conseguir esto, orientando las consignas para la versión Ubuntu 14.04. Sin embargo esto debería poder funcionar con otras versiones de Ubuntu y ser análoga a otras versiones de Linux.</p>
+<div class="section" id="cmake">
+<h3>CMake<a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h3>
+<p>En caso de no tener cmake instalado:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ sudo apt-get update
+$ sudo apt-get install cmake
+</pre></div>
+</div>
+</div>
+<div class="section" id="clonando-el-github">
+<h3>Clonando el github<a class="headerlink" href="#clonando-el-github" title="Permalink to this headline">¶</a></h3>
+<p>Primero se debe clonar nuestro github, usando el siguiente comando:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git clone https://github.com/Taller-7552-II/Jobify
+</pre></div>
+</div>
+<p>En el caso de no tener git instalado:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ sudo apt-get install git
+</pre></div>
+</div>
+</div>
+<div class="section" id="compilando-el-server">
+<h3>Compilando el server<a class="headerlink" href="#compilando-el-server" title="Permalink to this headline">¶</a></h3>
+<p>Para compilar  el servidor hay que situarse en la carpeta /server/ y correr el script build.sh</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> server/
+$ ./build.sh
+</pre></div>
+</div>
+</div>
+<div class="section" id="corriendo-el-server">
+<h3>Corriendo el server<a class="headerlink" href="#corriendo-el-server" title="Permalink to this headline">¶</a></h3>
+<p>Para correr el servidor hay que situarse en la carpeta /server/build/ y ejecutar ./Server. Si se quiere cambiar el directorio donde se va a crear la base de datos, -Ddb_path,/home/mi_path. Tambien se puede cambiar el puerto de la siguiente manera, -Dport,:8000. A continuacion se mostrará un ejemplo de un server abierto en el puerto 8080 con la base de datos en /home/new_path</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> server/
+$ ./build.sh -Ddb_path,/home/new_path -Dport,:8080
+</pre></div>
+</div>
+</div>
+<div class="section" id="correr-tests-de-python">
+<h3>Correr tests de python<a class="headerlink" href="#correr-tests-de-python" title="Permalink to this headline">¶</a></h3>
+<p>Situado en la carpeta /server/pythonintegrationtests, correr el script test_server_func.py. Esto ejecutara los test de integracion de python. Se debe tener instalado python 2.7</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ python server_test.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="correr-unit-test-del-server">
+<h3>Correr unit test del server<a class="headerlink" href="#correr-unit-test-del-server" title="Permalink to this headline">¶</a></h3>
+<p>Se debe estar situado en la carpeta server. Para correr las unit test se debe haber compilado el server con ./build.sh. A su vez, se debe tener instalado lcov y coveralls-lcov. De no ser el caso, correr el script install-coveralls. Luego se podrá correr el script run_tests.sh el cual ejecuta todas las unit test.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ ./build.sh
+$ sudo ./install_coveralls
+$ ./run_tests.sh
+</pre></div>
+</div>
+</div>
+<div class="section" id="correr-coverage-del-server">
+<h3>Correr coverage del server<a class="headerlink" href="#correr-coverage-del-server" title="Permalink to this headline">¶</a></h3>
+<p>Se debe estar situado en la carpeta server. Para correr el coverage se debe haber compilado el server con ./build.sh. A su vez, se debe tener instalado lcov y coveralls-lcov. De no ser el caso, correr el script install-coveralls como root. Luego se podrá correr el script run_coverage.sh el cual ejecuta todas las unit test y se realiza el coverage del server.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ ./build.sh
+$ sudo ./install_coveralls
+$ ./run_coverage.sh
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ejecucion-en-equipo">
+<h2>Ejecución en Equipo<a class="headerlink" href="#ejecucion-en-equipo" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id1">
+<h2>Corriendo el server<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Para correr el servidor hay que situarse en la carpeta /server/build/ y ejecutar ./Server. Si se quiere cambiar el directorio donde se va a crear la base de datos, -Ddb_path,/home/mi_path. Tambien se puede cambiar el puerto de la siguiente manera, -Dport,:8000. A continuacion se mostrará un ejemplo de un server abierto en el puerto 8080 con la base de datos en /home/new_path</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> server/
+$ ./build.sh -Ddb_path,/home/new_path -Dport,:8080
+</pre></div>
+</div>
+</div>
+<div class="section" id="otras-opciones">
+<h2>Otras opciones<a class="headerlink" href="#otras-opciones" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>Correr tests de python<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Situado en la carpeta /server/pythonintegrationtests, correr el script test_server_func.py. Esto ejecutara los test de integracion de python. Se debe tener instalado python 2.7</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ python server_test.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>Correr unit test del server<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Se debe estar situado en la carpeta server. Para correr las unit test se debe haber compilado el server con ./build.sh. A su vez, se debe tener instalado lcov y coveralls-lcov. De no ser el caso, correr el script install-coveralls. Luego se podrá correr el script run_tests.sh el cual ejecuta todas las unit test.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ ./build.sh
+$ sudo ./install_coveralls
+$ ./run_tests.sh
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>Correr coverage del server<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Se debe estar situado en la carpeta server. Para correr el coverage se debe haber compilado el server con ./build.sh. A su vez, se debe tener instalado lcov y coveralls-lcov. De no ser el caso, correr el script install-coveralls como root. Luego se podrá correr el script run_coverage.sh el cual ejecuta todas las unit test y se realiza el coverage del server.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ ./build.sh
+$ sudo ./install_coveralls
+$ ./run_coverage.sh
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="mantenimiento">
+<h2>Mantenimiento<a class="headerlink" href="#mantenimiento" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>El mantenimiento del Server de Jobify es un aspecto de suma importancia para el correcto funcionamiento del sistema. Para esto se deben considerar dos factores:</dt>
+<dd><ul class="first last simple">
+<li>La base de datos</li>
+<li>El Log</li>
+</ul>
+</dd>
+</dl>
+<p>La base de datos es una parte fundamental en cuento al desarrollo del sistema ya que es la encargada de mantener todos los archivos y datos de los usuarios. Esta suele encontrarse en la carpeta /tmp/prod/ pero puede cambiarse su ubicación como fue indicado en la sección  Instalación , más especificamente en &#8220;Corriento el Server&#8221;. Si se cambia de directorio base, los datos no se trasladan así que al hacer este cambio se debe tener en cuenta que se tiene una base de datos nueva.</p>
+<p>Como se aclaró anteriormente, la base de datos se encarga de guardar usuarios y chats al mismo tiempo, además de las sesiones. La manera de identificar rapidamente con que tipo de dato estamos tratando es al ver la clave que poseen en la base de datos. Los elementos de la base de datos son:</p>
+<blockquote>
+<div><ul class="simple">
+<li>User : (clave : &#8220;$username&#8221;) Guarda el nombre de usuario y su contraseña.</li>
+<li>User Metadata : (clave : &#8220;$username.usertoken&#8221;) : Guarda todos los datos del usuario, desde el perfil hasta la cantidad de archivos que tiene y cuales puede acceder.</li>
+<li>Chat Data : (clave : &#8220;usernameusername2)&#8221;) : Guarda una lista de mensajes del chat entre 2 usuarios en el orden que llegaron</li>
+</ul>
+</div></blockquote>
+<p>Dentro de la carpeta <em>build</em> se encuentra un archivo llamado log.txt en el cual se encuentran todas las actividades importantes que debe realizar el servidor. A medida que se agregan funcionalidades o se actualiza el código es fundamental seguir logeando para poder detectar errores o fallas en el server.</p>
+</div>
+<div class="section" id="known-issues">
+<h2>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
+<p>Si el servidor se cae mientras corre el cliente, el cliente no se entera que el server murió</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Administración</a><ul>
+<li><a class="reference internal" href="#manual-de-instalacion">Manual de instalación</a></li>
+<li><a class="reference internal" href="#instalacion-en-equipo">Instalación en Equipo</a><ul>
+<li><a class="reference internal" href="#cmake">CMake</a></li>
+<li><a class="reference internal" href="#clonando-el-github">Clonando el github</a></li>
+<li><a class="reference internal" href="#compilando-el-server">Compilando el server</a></li>
+<li><a class="reference internal" href="#corriendo-el-server">Corriendo el server</a></li>
+<li><a class="reference internal" href="#correr-tests-de-python">Correr tests de python</a></li>
+<li><a class="reference internal" href="#correr-unit-test-del-server">Correr unit test del server</a></li>
+<li><a class="reference internal" href="#correr-coverage-del-server">Correr coverage del server</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ejecucion-en-equipo">Ejecución en Equipo</a></li>
+<li><a class="reference internal" href="#id1">Corriendo el server</a></li>
+<li><a class="reference internal" href="#otras-opciones">Otras opciones</a><ul>
+<li><a class="reference internal" href="#id2">Correr tests de python</a></li>
+<li><a class="reference internal" href="#id3">Correr unit test del server</a></li>
+<li><a class="reference internal" href="#id4">Correr coverage del server</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mantenimiento">Mantenimiento</a></li>
+<li><a class="reference internal" href="#known-issues">Known Issues</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Administracion.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Carballo Matias, Guzzardi Gonzalo y Marshall Juan Patricio.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/Administracion.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

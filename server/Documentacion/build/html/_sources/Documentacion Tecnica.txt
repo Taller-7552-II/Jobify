@@ -54,7 +54,7 @@ Documentación de REST API
 ==============================================================================
 
 
-ENDPOINTS VALIDOS
+Endpoints validos
 ------------------------------------------------------------------------------
 
 
@@ -75,6 +75,6 @@ ENDPOINTS VALIDOS
         * POST /chat/'username'/'username2' postea un mensaje al chat
 
 
-OTHER
+Otros
 -----------------------------------------------------------------------------
     * cualquier otro request es invalido, y se devuelve error
