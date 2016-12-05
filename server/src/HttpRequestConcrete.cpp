@@ -297,9 +297,11 @@ HttpRequestConcrete::UriField HttpRequestConcrete::getUriParsedByIndex(int index
         return TOP_SKILL;
    } else if (field.compare("top_job") == 0){
         return TOP_JOB;
-    } else {
+   } else if (field.compare("chat") == 0){
+        return CHAT;
+   } else {
         return INVALID_URI_FIELD;
-    }
+   }
 }
 
 std::string HttpRequestConcrete::getUsername(){

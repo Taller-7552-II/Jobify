@@ -1,5 +1,6 @@
 #include "RespondFriendRequestHandler.h"
 #include "UserMetadata.h"
+#include "ChatData.h"
 #include "Logger.h"
 #include "Notifications.h"
 #include <iostream>
@@ -40,6 +41,10 @@ void RespondFriendRequestHandler::_handle(HttpRequest &hmsg){
         return;
     }
 
+    std::string uso = hmsg.getUriStringParsedByIndex(1);
+    std::string uso2 = hmsg.getUriStringParsedByIndex(3);
+
+
     std::string username2 = hmsg.getUriStringParsedByIndex(3);
     log->Log("El campo recibido por username2 es : " + username2, DEBUG);
     if(username2 == ""){
@@ -54,6 +59,17 @@ void RespondFriendRequestHandler::_handle(HttpRequest &hmsg){
     user_metadata.setUsername(username);
     if(response.compare("yes") == 0) {
         s = user_metadata.DBaddFriend(username2, true);
+
+
+        ChatData usu(db);
+        if(uso.compare(uso2) <= 0){
+            uso.append(uso2);
+            usu.setUsername(uso);
+        }else{
+            uso2.append(uso);
+            usu.setUsername(uso2);
+        }
+        s = usu.DBcreate();
     } else {
         s = user_metadata.DBremoveNotification(std::to_string(N_ADD_FRIEND) + "." + username2);
     }

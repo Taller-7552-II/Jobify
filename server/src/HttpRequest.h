@@ -44,6 +44,7 @@ class HttpRequest
             TOP,
             TOP_JOB,
             TOP_SKILL,
+            CHAT,
             INVALID_URI_FIELD
         } UriField;
 

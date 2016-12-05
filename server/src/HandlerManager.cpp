@@ -17,9 +17,11 @@
 #include "SendFriendRequestHandler.h"
 #include "RespondFriendRequestHandler.h"
 #include "TopRankGetHandler.h"
-#include "TopJobHandler.h"
+#include "GetChatHandler.h"
 #include "JobGetHandler.h"
+#include "TopJobHandler.h"
 #include "SkillGetHandler.h"
+#include "PostChatHandler.h"
 #include "DefaultHandler.h"
 #include "Logger.h"
 
@@ -51,6 +53,8 @@ HandlerManager::HandlerManager(std::string db_path, bool create_if_missing, bool
 	handlers.push_back(new SkillGetHandler(db, auth));
 	handlers.push_back(new TopRankGetHandler(db, auth));
 	handlers.push_back(new TopJobHandler(db, auth));
+	handlers.push_back(new GetChatHandler(db, auth));
+	handlers.push_back(new PostChatHandler(db, auth));
 	handlers.push_back(new DefaultHandler(db, auth)); // este tiene q ir ultimo pq acepta cualquier uri
 	log->Log("Se inicializo correctamente el HandlerManager",INFO);
 }

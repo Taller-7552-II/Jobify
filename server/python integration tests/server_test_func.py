@@ -205,6 +205,30 @@ def get_profile(username, token):
 		print
 	else:
 		return r
+def get_chat(username, username2):
+
+	r = requests.get(ip+"/chat/"+username+"/"+username2)
+
+	json_respuesta = json.loads(r.content, strict=False);
+	if verbose:
+		print "GET", r.url, data
+		print "content:", json.dumps(json_respuesta)
+		print
+	else:
+		return r
+def post_chat(username, username2,msj):
+
+
+	data = json.dumps({'mensaje':msj})
+
+
+	r = requests.post(ip+"/chat/"+username+"/"+username2,data=data)
+	if verbose:
+		print "POST", r.url, data
+		print "content:", r.content
+		print
+	else:
+		return r
 
 
 import unittest
