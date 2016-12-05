@@ -3,7 +3,8 @@
 #include "Logger.h"
 #include <iostream>
 using namespace std;
-
+#define hasheoDatos(a,b,u) if(a.compare(b) <= 0){a.append(b);u.setUsername(a);}else{b.append(a);u.setUsername(b);} 
+#define appendeoAlFinal(a,b,u) a.append(": "); a.append(b);    u.DBaddMensajes(a);
 
 PostChatHandler::PostChatHandler(Database* db , TokenAuthenticator* a) : EventHandlerIgnoresAuthentication(db,a)
 {
@@ -36,23 +37,13 @@ void PostChatHandler::_handle(HttpRequest& hmsg){
     usu.setUsername(username);
 
     std::string username2 = hmsg.getUriStringParsedByIndex(2);
-    if(username.compare(username2) <= 0){
-        username.append(username2);
-        usu.setUsername(username);
-    }else{
-        username2.append(username);
-        usu.setUsername(username2);
-    }
+    hasheoDatos(username,username2,usu);
     Status s = usu.DBget();
     std::string frase = hmsg.getUriStringParsedByIndex(1);
     std::string response = hmsg.getCampo("mensaje");
+    appendeoAlFinal(frase,rseponse,usu);
+    
 
-
-
-    frase.append(": ");
-    frase.append(response);
-
-    usu.DBaddMensajes(frase);
     Server_Logger* log = Server_Logger::getInstance();
     if(s.ok())
         hmsg.setResponse(s,usu.getProfile());
