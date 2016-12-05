@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Documentación Técnica Servidor &#8212; Jobify 2.4.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.4.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Jobify 2.4.2 documentation" href="index.html" />
+    <link rel="prev" title="Manual de proyecto" href="Manual de Proyecto.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="documentacion-tecnica-servidor">
+<h1>Documentación Técnica Servidor<a class="headerlink" href="#documentacion-tecnica-servidor" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ambiente-de-desarrollo">
+<h2>Ambiente de desarrollo<a class="headerlink" href="#ambiente-de-desarrollo" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="servidor">
+<h3>Servidor<a class="headerlink" href="#servidor" title="Permalink to this headline">¶</a></h3>
+<p>Para el desarrollo del servidor, se utilizó <a class="reference external" href="https://codeblocks.org">Codeblocks</a> .</p>
+<p>Sin embargo, más allá de su uso para facilitar el desarrollo, la compilación se hizo siempre a partir de <a class="reference external" href="https://cmake.org/">cmake</a>.</p>
+</div>
+</div>
+<div class="section" id="librerias">
+<h2>Librerías<a class="headerlink" href="#librerias" title="Permalink to this headline">¶</a></h2>
+<p>Para manejar distintos recursos en el proceso de desarrollo se emplearon librerías open source.</p>
+<div class="section" id="servidor-http">
+<h3>Servidor http<a class="headerlink" href="#servidor-http" title="Permalink to this headline">¶</a></h3>
+<p>Para realizar las operaciones para manejar el servidor http se empleó <a class="reference external" href="https://github.com/cesanta/mongoose">mongoose</a>, el cual facilitó en gran medida el manejo de http requests.</p>
+</div>
+<div class="section" id="base-de-datos">
+<h3>Base de datos<a class="headerlink" href="#base-de-datos" title="Permalink to this headline">¶</a></h3>
+<p>Para el manejo de la base de datos por parte del servidor, se utilizó una base de datos no relacional del tipo <em>clave/valor</em> llamada <a class="reference external" href="https://github.com/google/leveldb">leveldb</a>.</p>
+</div>
+<div class="section" id="datos-json">
+<h3>Datos json<a class="headerlink" href="#datos-json" title="Permalink to this headline">¶</a></h3>
+<p>Para la manipulación de datos json se hizo uso de la librerías <a class="reference external" href="https://github.com/open-source-parsers/jsoncpp">jsoncpp</a>. Los json se usaron tanto para el envío de datos a través de los mensajes http como en la persistencia de datos del lado del servidor.</p>
+</div>
+</div>
+<div class="section" id="diseno">
+<h2>Diseño<a class="headerlink" href="#diseno" title="Permalink to this headline">¶</a></h2>
+<p>Para poder visualizar la arquitectura del proyecto se presenta aquí un diagrama UML que muestra las clases más importantes del programa.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/ServerDiagrama.png"><img alt="_images/ServerDiagrama.png" src="_images/ServerDiagrama.png" style="width: 1293.0px; height: 1121.0px;" /></a>
+</div>
+<p>Aquí se puede ver como Server es quien se encarga de mantener la conexión, pero HandlerManager es la clase que maneja todas las httprequests, seleccionando cada handler acorde a la acción que deba hacer. A su vez, cada handler empleará los DBElements que necesite par subir, modificar o extraer datos de la clase Database, que es quien se encarga de manejar la base de datos.</p>
+</div>
+<div class="section" id="documentacion-de-rest-api">
+<h2>Documentación de REST API<a class="headerlink" href="#documentacion-de-rest-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="endpoints-validos">
+<h3>ENDPOINTS VALIDOS<a class="headerlink" href="#endpoints-validos" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>POST /users/ sign up</li>
+<li>POST /sessions/ login</li>
+<li>DELETE /sessions/ logout</li>
+<li>DELETE /users/ borrar usuario</li>
+<li>GET /users/&#8217;username&#8217; traer info del usuario</li>
+<li>PUT /users/&#8217;username&#8217; modificar perfil de tal usuario</li>
+<li>PUT /like/&#8217;username&#8217;/&#8217;username2&#8217; like del 1er usuario al 2do</li>
+<li>DELETE /like/&#8217;username&#8217;/&#8217;username2&#8217; dislike del 1er usuario al 2do</li>
+<li>POST /users/&#8217;username&#8217;/addFriend/&#8217;username2&#8217; manda solicitud de amistad username a username2</li>
+<li>POST /users/&#8217;username&#8217;/acceptFriend/&#8217;username2&#8217; username acepta la solicitud de amistad de username2</li>
+<li>GET /top_skill/ devuelve el skill con mayor ranking</li>
+<li>GET /top_job/ devuelve el job con mayor ranking</li>
+<li>GET /users/&#8217;username&#8217;/profile/ trae el perfil del usuario username</li>
+<li>GET /chat/&#8217;username&#8217;/&#8217;username2&#8217; trae el chat entre el username y el username2</li>
+<li>POST /chat/&#8217;username&#8217;/&#8217;username2&#8217; postea un mensaje al chat</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="other">
+<h3>OTHER<a class="headerlink" href="#other" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>cualquier otro request es invalido, y se devuelve error</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Documentación Técnica Servidor</a><ul>
+<li><a class="reference internal" href="#ambiente-de-desarrollo">Ambiente de desarrollo</a><ul>
+<li><a class="reference internal" href="#servidor">Servidor</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#librerias">Librerías</a><ul>
+<li><a class="reference internal" href="#servidor-http">Servidor http</a></li>
+<li><a class="reference internal" href="#base-de-datos">Base de datos</a></li>
+<li><a class="reference internal" href="#datos-json">Datos json</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#diseno">Diseño</a></li>
+<li><a class="reference internal" href="#documentacion-de-rest-api">Documentación de REST API</a><ul>
+<li><a class="reference internal" href="#endpoints-validos">ENDPOINTS VALIDOS</a></li>
+<li><a class="reference internal" href="#other">OTHER</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Manual de Proyecto.html" title="previous chapter">Manual de proyecto</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Documentacion Tecnica.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Carballo Matias, Guzzardi Gonzalo y Marshall Juan Patricio.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/Documentacion Tecnica.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
