@@ -1,2 +1,0 @@
-/home/matias/Desktop/Jobify/server/build/CMakeFiles/Server.dir
-/home/matias/Desktop/Jobify/server/build/CMakeFiles/ServerLib.dir
