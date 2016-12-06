@@ -76,4 +76,17 @@ set_property(TARGET CRYPTO PROPERTY IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DI
 
 add_executable(Server src/main.cpp)
 target_link_libraries(Server ServerLib LevelDB Curl Zlib  Snappy Bz2 Json Mongoose SSL CRYPTO -lrt)
+
+#TESTS
+
+# GTest y GMock
+add_library(GMock STATIC IMPORTED)
+set_property(TARGET GMock PROPERTY IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/lib/GMock/libgmock.a")
+
+add_library(GMock_main STATIC IMPORTED)
+set_property(TARGET GMock_main PROPERTY IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/lib/GMock/libgmock_main.a")
+
+set(_dir "${CMAKE_CURRENT_BINARY_DIR}/unit_tests/")
+file(MAKE_DIRECTORY ${_dir})
+
 add_subdirectory(unit_tests unit_tests)
