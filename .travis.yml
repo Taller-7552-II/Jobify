@@ -42,14 +42,6 @@ install:
   - export CXX="g++-4.8"
 
 script:
-  - bash
-  - cd ..
-  - cd ..
-  - cd ..
-  - cd ..
-  - cd ..
-  - cd home
-  - cd user
   - git clone https://github.com/Taller-7552-II/Jobify
   - cd Jobify
   - cd server
