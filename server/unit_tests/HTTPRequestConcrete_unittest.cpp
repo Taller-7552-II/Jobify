@@ -168,12 +168,12 @@ TEST(HttpRequestConcreteTests, setResponseError){
 	struct http_message* hmsg = new_http_message("GET", "users/matias/profile", "");
 	req.init(conn, hmsg);
 
-	req.setResponse(Status::Aborted());
+	req.setResponse(Status::InvalidArgument("El request recibido no es valido"));
 	response = req.getResponse();
 	reader.parse(response.c_str(), response_parsed);
 	EXPECT_TRUE(req.getStatusCode() != 200);
 
-	req.setResponse(Status::Aborted(), "todo mal");
+	req.setResponse(Status::InvalidArgument("El request recibido no es valido"), "todo mal");
 	response = req.getResponse();
 	reader.parse(response.c_str(), response_parsed);
 	EXPECT_TRUE(response_parsed["status"] == "todo mal");
@@ -191,14 +191,14 @@ TEST(HttpRequestConcreteTests, addValueToBody){
 	struct http_message* hmsg = new_http_message("GET", "users/matias/profile", "");
 	req.init(conn, hmsg);
 
-	req.setResponse(Status::Aborted());
+	req.setResponse(Status::InvalidArgument("El request recibido no es valido"));
 	req.addValueToBody("conn_token", "1111");
 	response = req.getResponse();
 	reader.parse(response.c_str(), response_parsed);
 	EXPECT_TRUE(response_parsed["conn_token"] == "1111");
 	EXPECT_TRUE(req.getStatusCode() != 200);
 
-	req.setResponse(Status::Aborted(), "todo mal");
+	req.setResponse(Status::InvalidArgument("El request recibido no es valido"), "todo mal");
 	req.addValueToBody("conn_token", "12345");
 	response = req.getResponse();
 	reader.parse(response.c_str(), response_parsed);
