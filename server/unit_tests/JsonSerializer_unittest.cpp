@@ -126,3 +126,33 @@ TEST(JsonSerializerTest, CrearArrayValuesDeVectorNombreValor){
     serializer.get(res_array, 3, ERROR, res, str_res);
     EXPECT_TRUE(str_res.compare(ERROR) != 0);
 }
+
+TEST(JsonSerializerTest, userMetadataSerialization){
+
+	std::string join_date = "26/09/2015";
+
+	JsonSerializer serializer;
+
+	std::string val_date_joined = "";
+	serializer.addValueToObjectList(val_date_joined, "join_date", join_date);
+
+	std::string val_json = "";
+	serializer.joinValueIntoList(val_json, val_date_joined);
+	serializer.turnObjectListToObject(val_json);
+
+	std::ofstream log;
+	log.open("JsonSerializer_unittest_LOG.txt", std::ios::app);
+	if (!log){
+		log.open("JsonSerializer_unittest_LOG.txt", std::ios::trunc);
+	}
+	log << "Json armado: " << std::endl;
+	log << val_json << std::endl;
+
+	Reader reader;
+	Value value;
+	reader.parse(val_json, value);
+	log << "Json parseado: " << std::endl;
+	log << value.toStyledString() << std::endl;
+	log.close();
+
+}
