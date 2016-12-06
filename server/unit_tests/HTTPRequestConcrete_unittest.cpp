@@ -58,7 +58,7 @@ TEST(HttpRequestConcreteTests, getUriParsedByIndex){
 	EXPECT_TRUE(req.getUriParsedByIndex(0) == HttpRequest::SESSIONS);
 	delete_http_message(hmsg);
 
-	hmsg = new_http_message("POST", "users/matias/profile/", "");
+	hmsg = new_http_message("GET", "users/matias/profile/", "");
 	req.init(conn, hmsg);
 	EXPECT_TRUE(req.getUriParsedByIndex(0) == HttpRequest::PROFILE);
 	delete_http_message(hmsg);
@@ -215,7 +215,7 @@ TEST(HttpRequestConcreteTests, getHeaderValue){
 	vector<string> header_names;
 	header_names.push_back("conn_token");
 	vector<string> header_values;
-	header_values.push_back("1234");
+	header_values.push_back("1111");
 	struct http_message* hmsg = new_http_message("GET", "users/matias/profile", "", &header_names, &header_values);
 	req.init(conn, hmsg);
 	EXPECT_TRUE(req.getConnToken() == "1111");
