@@ -36,7 +36,7 @@ TEST(TopJobHandlerTests, TopJobHandlerOK){
     delete conn;
 }
 
-TEST(UserGetHandlerTests, UserGetFailure){
+TEST(TopHandlerTests, TopJobFailure){
     Database* db = new DatabaseMockRAM;
     TokenAuthenticator* tk = new TokenAuthenticator;
     string token = tk->createToken("gonzalo");
