@@ -72,12 +72,22 @@ addons:
 
 
 script:
+  - echo "Docker se encuentra instalado. Procediendo a ejecutar server como daemon"
+  - sudo docker pull matisyo/jobify-docker:latest
+  - sudo docker run -d --add-host="localhost:10.0.0.2" matisyo/jobify-docker:latest
+  - cd /home/user
+  - git clone https://github.com/Taller-7552-II/Jobify
+  - cd Jobify
   - cd server
-  - rm -rf build
-  - chmod +x build.sh 
+  - chmod +x build.sh
   - ./build.sh
-  - chmod +x run_tests.sh
-  - ./run_tests.sh
+
+  - echo "ID proceso:"
+  - sudo docker ps | grep "matisyo/jobify-docker"
+
+  - echo "IP a conectarse: 172.17.0.2:8000"
+  - echo "Para detener el server correr :~$ sudo docker stop <container-id>"
+
 
 branches:
   only:
