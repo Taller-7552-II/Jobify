@@ -56,20 +56,6 @@ TEST(ChatDataTest, GetTest){
 	EXPECT_TRUE(chatData.getUsername() == "qwerty");
 }
 
-TEST(ChatDataTest, EraseTest){
-	DatabaseMockRAM* db = new DatabaseMockRAM;
-
-	ChatData chatData(db);
-	chatData.setUsername("matias");
-
-	Status s = chatData.DBerase();
-	EXPECT_FALSE(s.ok());
-	s = chatData.DBcreate();
-	EXPECT_TRUE((db->get(chatData)).ok());
-	s = chatData.DBerase();
-	EXPECT_FALSE((db->get(chatData)).ok());
-}
-
 TEST(UserTest, BorrarChatDataBorraMetadata){
 	DatabaseMockRAM* db = new DatabaseMockRAM;
 
@@ -83,10 +69,4 @@ TEST(UserTest, BorrarChatDataBorraMetadata){
 	um.setUsername("matias");
 	s = um.DBget();
 	EXPECT_TRUE(s.ok());
-
-	s = chatData.DBerase();
-	EXPECT_FALSE((db->get(chatData)).ok());
-	um.reSync();
-	s = um.DBget();
-	EXPECT_FALSE(s.ok());
 }
