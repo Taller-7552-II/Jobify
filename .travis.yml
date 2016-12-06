@@ -2,8 +2,6 @@ language: cpp
 
 compiler: 
   - gcc
-services:
-  - docker
 addons:
     apt:
         sources:
@@ -44,11 +42,11 @@ install:
   - export CXX="g++-4.8"
 
 script:
-  - echo "Docker se encuentra instalado. Procediendo a ejecutar server como daemon"
-  - sudo docker pull matisyo/jobify-docker:latest
-  - sudo docker run -a stdin -a stdout -i -t matisyo/jobify-docker /bin/bash
+  - cd home
+  - cd user
+  - git clone https://github.com/Taller-7552-II/Jobify
+  - cd Jobify
   - ./installer_ducker.sh
-  - exit
 
 branches:
   only:
