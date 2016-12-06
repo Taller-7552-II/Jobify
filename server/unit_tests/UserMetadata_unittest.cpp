@@ -34,13 +34,13 @@ TEST(UserMetadataTest, GettersYSettersTest){
 
 	user_metadata.changeResume(resumen);
 
-	EXPECT_TRUE(user_metadata.jobList.empty == true);
+	EXPECT_TRUE(user_metadata.jobList.empty() == true);
 	user_metadata.changeJobList("jobs");
-	EXPECT_TRUE(user_metadata.jobList.empty == false);
+	EXPECT_TRUE(user_metadata.jobList.empty() == false);
 
-	EXPECT_TRUE(user_metadata.skillList.empty == true);
+	EXPECT_TRUE(user_metadata.skillList.empty() == true);
 	user_metadata.changeSkillList("skills");
-	EXPECT_TRUE(user_metadata.skillList.empty == false);
+	EXPECT_TRUE(user_metadata.skillList.empty() == false);
 
 	user_metadata.addNotificacion("notification");
 
@@ -52,7 +52,7 @@ TEST(UserMetadataTest, GettersYSettersTest){
 
 	user_metadata.addLike("mati");
 	std::vector<std::string>* likeList = user_metadata.getLikeList();
-	EXPECT_TRUE(likeList->empty == false);
+	EXPECT_TRUE(likeList->empty() == false);
 
 	user_metadata.removeLike("mati");
 
@@ -60,7 +60,7 @@ TEST(UserMetadataTest, GettersYSettersTest){
 
 	user_metadata.changePic("super foto");
 
-	EXPECT_TRUE(user_metadata.likeList == false);
+	EXPECT_TRUE(user_metadata.likeList.empty() == false);
     
 }
 
