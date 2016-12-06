@@ -1,0 +1,148 @@
+swagger: '2.0'
+info:
+  title: Jobify API
+  description: Move your app forward with the Jobify API
+  version: "1.0.0"
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /users:
+    post:
+      summary: Sign up
+      description: |
+        Endpoint para crear un usuario
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - User
+      responses:
+        200:
+          description: Se creo correctamente el usuario
+
+    delete:
+      summary: Delete usuario
+      description: |
+        Elimina un usuario si existe.
+      tags:
+        - User
+      responses:
+        200:
+          description: Se pudo eliminar correctamente el usuario
+  /users/$username:
+    get:
+      summary: Info del usuario
+      description: Trae la info del usuario 
+      tags:
+        - User
+      responses:
+        200:
+          description: Info de ese usuario
+    put:
+      summary: Modificar info de ese usuario
+      description: Modifica la informacion de $username
+      tags:
+        - User
+      responses:
+        200:
+          description: se modifico correctamente
+  /users/$username/profile:
+    get:
+      summary: Perfil del $username
+      description: trae el json del perfil de $username 
+      tags:
+        - User
+      responses:
+        200:
+          description: Trajo correctamente el perfil de $username
+  /users/$username/addFriend/$username2:
+    post:
+      summary: Mandar solicitud de amistad
+      description: Manda una solicitud de amistad de la cuenta para $username2 de $username
+      tags:
+        - User
+      responses:
+        200:
+          description: Mando la solicitud a $username correctamente
+  /users/$username/acceptFriend/$username2:
+    post: 
+      summary: Aceptar solicitud de amistad
+      description: $username acepta una solicitud de amistad de $username2  
+      tags:
+        - User
+      responses:
+        200:
+          description: Se agrego como amigo de $username a $username2
+  /sessions:
+    post:
+      summary: Login
+      description: Inicia una sesion de usuario
+      tags:
+        - Session
+      responses:
+        200:
+          description: Se logro iniciar sesion correctamente
+    delete:
+      summary: Logout
+      description: Cierra una cuenta de usuario previamente creada
+      tags:
+        - Session
+      responses:
+        200:
+          description: Se cerro correctamente la sesion
+  /like/$username/$username2:
+    put:
+      summary: Like
+      description: Agrega un like del $username sobre $username2
+      tags:
+        - Like
+      responses:
+        200:
+          description: Se agrego correctamente el like
+    delete:
+      summary: Dislike
+      description: Elimina un like del $username sobre $username2
+      tags:
+        - Like
+      responses:
+        200:
+          description: Se elimino correctamente el like
+  /top_skill:
+    get:
+      summary: Top Skill
+      description: Trae la skill mas top
+      tags:
+        - Tops
+      responses:
+        200:
+          description: Trajo correctamente la Skill mas top
+  /top_job:
+    get:
+      summary: Top Job
+      description: Devuelve el puesto mas top
+      tags:
+        - Tops
+      responses:
+        200:
+          description: Se obtuvo la posicion mas top
+  /chat/$username/$username2:
+    get:
+      summary: Leer chat
+      description: Obtengo el chat entre $username y $username2
+      tags:
+        - Chat
+      responses:
+        200:
+          description: Obtuvo el chat entre los 2 usuarios
+    post:
+      summary: Postear un mensaje
+      description: Agrega un mensaje al chat entre los 2 usuarios
+      tags:
+        - Chat
+      responses:
+        200:
+          description: Logro postear un nuevo mensaje de chat entre los 2 usuarios
