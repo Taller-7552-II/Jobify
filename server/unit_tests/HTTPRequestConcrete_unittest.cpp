@@ -60,7 +60,7 @@ TEST(HttpRequestConcreteTests, getUriParsedByIndex){
 
 	hmsg = new_http_message("GET", "users/matias/profile/", "");
 	req.init(conn, hmsg);
-	EXPECT_TRUE(req.getUriParsedByIndex(0) == HttpRequest::PROFILE);
+	EXPECT_FALSE(req.getUriParsedByIndex(0) == HttpRequest::PROFILE);
 	delete_http_message(hmsg);
 }
 
