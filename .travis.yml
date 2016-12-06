@@ -46,7 +46,9 @@ install:
 script:
   - echo "Docker se encuentra instalado. Procediendo a ejecutar server como daemon"
   - sudo docker pull matisyo/jobify-docker:latest
-  - sudo docker run -d matisyo/jobify-docker:latest bash /home/user/installer_ducker.sh
+  - sudo docker run -a stdin -a stdout -i -t matisyo/jobify-docker /bin/bash
+  - ./installer_ducker.sh
+  - exit
 
 branches:
   only:
