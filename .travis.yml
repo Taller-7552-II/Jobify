@@ -47,7 +47,7 @@ install:
 script:
   - echo "Docker se encuentra instalado. Procediendo a ejecutar server como daemon"
   - sudo docker pull matisyo/jobify-docker:latest
-  - sudo docker run -d --add-host=\"localhost:10.0.0.2\" matisyo/jobify-docker:latest bash /home/user/Jobify/server/installer_ducker.sh
+  - sudo docker run -d --add-host=\"localhost:10.0.0.2\" matisyo/jobify-docker:latest bash /home/user/installer_ducker.sh
 
 branches:
   only:
