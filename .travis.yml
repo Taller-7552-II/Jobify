@@ -45,7 +45,9 @@ script:
   - git clone https://github.com/Taller-7552-II/Jobify
   - cd Jobify
   - cd server
-  - ./installer_ducker.sh
+  - chmod +x build.sh
+  - ./build.sh
+  - ./run_coverage.sh "UPLOAD"
 
 branches:
   only:
