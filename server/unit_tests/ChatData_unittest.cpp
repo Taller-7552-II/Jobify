@@ -48,7 +48,7 @@ TEST(ChatDataTest, GetTest){
 	Status s = chatData.DBget();
 	EXPECT_FALSE(s.ok());
 
-	chatData = chatData.DBcreate();
+	s = chatData.DBcreate();
 	EXPECT_TRUE(s.ok());
 
 	s = chatData.DBget();
