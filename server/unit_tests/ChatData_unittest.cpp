@@ -36,7 +36,7 @@ TEST(ChatDataTest, CrearChatDataCreaMetadata){
 	UserMetadata um(db);
 	um.setUsername("matias");
 	s = um.DBget();
-	EXPECT_TRUE(s.ok());
+	EXPECT_FALSE(s.ok());
 }
 
 TEST(ChatDataTest, GetTest){
@@ -49,11 +49,11 @@ TEST(ChatDataTest, GetTest){
 	EXPECT_FALSE(s.ok());
 
 	s = chatData.DBcreate();
-	EXPECT_TRUE(s.ok());
+	EXPECT_FALSE(s.ok());
 
 	s = chatData.DBget();
 	EXPECT_TRUE(s.ok());
-	EXPECT_TRUE(chatData.getUsername() == "qwerty");
+	EXPECT_TRUE(chatData.getUsername() == "matias");
 }
 
 TEST(UserTest, BorrarChatDataBorraMetadata){
@@ -68,5 +68,5 @@ TEST(UserTest, BorrarChatDataBorraMetadata){
 	UserMetadata um(db);
 	um.setUsername("matias");
 	s = um.DBget();
-	EXPECT_TRUE(s.ok());
+	EXPECT_FALSE(s.ok());
 }
