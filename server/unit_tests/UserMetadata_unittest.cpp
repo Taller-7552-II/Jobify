@@ -48,7 +48,7 @@ TEST(UserMetadataTest, GettersYSettersTest){
 
 	user_metadata.addFriend("juampa");
 
-	removeFriend("juampa");
+	user_metadata.removeFriend("juampa");
 
 	user_metadata.addLike("mati");
 	std::vector<std::string>* likeList = user_metadata.getLikeList();
@@ -120,7 +120,7 @@ TEST(UserMetadataTest, ChangeEmailTest){
 	user_metadata.setUsername(username);
 	Status s = user_metadata.DBchange_email(email);
 	s = user_metadata.DBget();
-	EXPECT_TRUE(user_metadata.getEmail() == email)
+	EXPECT_TRUE(user_metadata.getEmail() == email);
 }
 
 TEST(UserMetadataTest, ChangeProfilePicTest){
