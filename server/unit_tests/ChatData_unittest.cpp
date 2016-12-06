@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "ChatData.h"
 #include "DatabaseMockRAM.h"
+#include "UserMetaData.h"
 
 TEST(ChatDataTest, GettersYSettersTest){
 	DatabaseMockRAM* db = new DatabaseMockRAM;
