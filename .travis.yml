@@ -44,53 +44,10 @@ install:
   - sudo apt-get install -qq g++-4.8
   - export CXX="g++-4.8"
 
-addons:
-    apt:
-        sources:
-          - ubuntu-toolchain-r-test
-        packages:
-          - gcc-multilib
-          - gcc-5
-          - g++-5
-          - gcc-5-locales
-          - gcc-5-multilib
-          - g++-5-multilib
-          - libstdc++6-5-dbg
-          - lib32stdc++6-5-dbg
-          - libstdc++-5-doc
-          - libgcc1-dbg
-          - libgomp1-dbg
-          - libitm1-dbg
-          - libatomic1-dbg
-          - libasan2-dbg
-          - liblsan0-dbg
-          - libtsan0-dbg
-          - libubsan0-dbg
-          - libcilkrts5-dbg
-          - libquadmath0-dbg
-          - zlib1g-dev
-          - libbz2-dev
-          - libsnappy-dev
-
-
 script:
   - echo "Docker se encuentra instalado. Procediendo a ejecutar server como daemon"
   - sudo docker pull matisyo/jobify-docker:latest
-  - sudo docker run -d --add-host="localhost:10.0.0.2" matisyo/jobify-docker:latest
-  - cd /home/user
-  - git clone https://github.com/Taller-7552-II/Jobify
-  - sudo apt-get install libcurl4-gnutls-dev
-  - cd Jobify
-  - cd server
-  - chmod +x build.sh
-  - ./build.sh
-
-  - echo "ID proceso:"
-  - sudo docker ps | grep "matisyo/jobify-docker"
-
-  - echo "IP a conectarse: 172.17.0.2:8000"
-  - echo "Para detener el server correr :~$ sudo docker stop <container-id>"
-
+  - sudo docker run -d --add-host="localhost:10.0.0.2" matisyo/jobify-docker:latest bash /home/user/Jobify/server/installer_ducker.sh
 
 branches:
   only:
