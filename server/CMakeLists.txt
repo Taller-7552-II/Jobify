@@ -76,3 +76,4 @@ set_property(TARGET CRYPTO PROPERTY IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DI
 
 add_executable(Server src/main.cpp)
 target_link_libraries(Server ServerLib LevelDB Curl Zlib  Snappy Bz2 Json Mongoose SSL CRYPTO -lrt)
+add_subdirectory(unit_tests unit_tests)
