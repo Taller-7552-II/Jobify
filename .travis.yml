@@ -4,7 +4,6 @@ compiler:
   - gcc
 services:
   - docker
-
 addons:
     apt:
         sources:
