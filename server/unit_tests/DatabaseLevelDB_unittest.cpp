@@ -24,7 +24,7 @@ TEST(DatabaseTest, CrearDBConfiguradaSatisfactoriamente){
 }
 
 TEST(DatabaseTest, NoPuedoConfigurarDBSiFueAbierta){
-    DatebaseLevelDB db;
+    DatabaseLevelDB db;
     leveldb::Status s;
 
     s = db.config("/tmp/test", true);
@@ -38,7 +38,7 @@ TEST(DatabaseTest, NoPuedoConfigurarDBSiFueAbierta){
 }
 
 TEST(DatabaseTest, NoPuedoAbrirDBSiYaFueAbierta){
-    DatebaseLevelDB db;
+    DatabaseLevelDB db;
     leveldb::Status s;
 
     s = db.config("/tmp/test", true);
@@ -77,7 +77,7 @@ class MockUnoMasDBElement : public DBElement {
 };
 
 TEST(DatabaseTest, GuardarYRecuperarElemento){
-    DatebaseLevelDB db;
+    DatabaseLevelDB db;
     leveldb::Status s;
 
     s = db.config("/tmp/test", true);
@@ -102,7 +102,7 @@ TEST(DatabaseTest, GuardarYRecuperarElemento){
 }
 
 TEST(DatabaseTest, GuardarDosClavesIgualesPisaElValor){
-    DatebaseLevelDB db;
+    DatabaseLevelDB db;
     leveldb::Status s;
 
     s = db.config("/tmp/test", true);
@@ -131,7 +131,7 @@ TEST(DatabaseTest, GuardarDosClavesIgualesPisaElValor){
 }
 
 TEST(DatabaseTest, NoPuedoRecuperarDatoQueNoIngreseAntes){
-    DatebaseLevelDB db;
+    DatabaseLevelDB db;
     leveldb::Status s;
 
     s = db.config("/tmp/test", true);
@@ -149,7 +149,7 @@ TEST(DatabaseTest, NoPuedoRecuperarDatoQueNoIngreseAntes){
 }
 
 TEST(DatabaseTest, LimpiarDBBorraTodasLasClaves){
-    DatebaseLevelDB db;
+    DatabaseLevelDB db;
     leveldb::Status s;
 
     s = db.config("/tmp/test", true);
@@ -172,7 +172,7 @@ TEST(DatabaseTest, LimpiarDBBorraTodasLasClaves){
 }
 
 TEST(DatabaseTest, NoPuedoLimpiarSiNoAbri){
-    DatebaseLevelDB db;
+    DatabaseLevelDB db;
     leveldb::Status s;
 
     s = db.config("/tmp/test", true);
@@ -183,7 +183,7 @@ TEST(DatabaseTest, NoPuedoLimpiarSiNoAbri){
 }
 
 TEST(DatabaseTest, NoPuedoGuardarElemSinAbrirDB){
-    DatebaseLevelDB db;
+    DatabaseLevelDB db;
     leveldb::Status s;
 
     s = db.config("/tmp/test", true);
@@ -195,7 +195,7 @@ TEST(DatabaseTest, NoPuedoGuardarElemSinAbrirDB){
 }
 
 TEST(DatabaseTest, NoPuedoRecuperarElemSinAbrirDB){
-    DatebaseLevelDB db;
+    DatabaseLevelDB db;
     leveldb::Status s;
 
     s = db.config("/tmp/test", true);
@@ -207,7 +207,7 @@ TEST(DatabaseTest, NoPuedoRecuperarElemSinAbrirDB){
 }
 
 TEST(DatabaseTest, NoPuedoBorrarElemSinAbrirDB){
-    DatebaseLevelDB db;
+    DatabaseLevelDB db;
     leveldb::Status s;
 
     s = db.config("/tmp/test", true);
@@ -219,7 +219,7 @@ TEST(DatabaseTest, NoPuedoBorrarElemSinAbrirDB){
 }
 
 TEST(DatabaseTest, BorrarNoDaErrorSiNoExisteLaClave){
-    DatebaseLevelDB db;
+    DatabaseLevelDB db;
     leveldb::Status s;
 
     s = db.config("/tmp/test", true);
@@ -237,7 +237,7 @@ TEST(DatabaseTest, BorrarNoDaErrorSiNoExisteLaClave){
 }
 
 TEST(DatabaseTest, SiBorroClaveBorraElementoDeDB){
-    DatebaseLevelDB db;
+    DatabaseLevelDB db;
     leveldb::Status s;
 
     s = db.config("/tmp/test", true);
@@ -260,7 +260,7 @@ TEST(DatabaseTest, SiBorroClaveBorraElementoDeDB){
 }
 
 TEST(DatabaseTest, CreandoBatchLaSecuenciaDeOperacionesEsAtomica){
-    DatebaseLevelDB db;
+    DatabaseLevelDB db;
     leveldb::Status s;
 
     s = db.config("/tmp/test", true);
