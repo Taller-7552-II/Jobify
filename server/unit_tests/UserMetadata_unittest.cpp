@@ -48,7 +48,6 @@ TEST(UserMetadataTest, ChangeEmailTest){
 
     UserMetadata user_metadata(db);
     user_metadata.setUsername(username);
-    s = user_metadata.DBget();
     EXPECT_TRUE(1 == 1);
 }
 
