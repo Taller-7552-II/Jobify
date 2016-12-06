@@ -9,7 +9,7 @@ lcov --add-tracefile base.info --add-tracefile tests.info --output-file total.in
 lcov --remove total.info '/unit_tests/*' '/include/*' '/src/main.cpp' '/src/HttpRequestMock.*' --output-file total.info
 #lcov --list total.info
 if [ "$upload" = "UPLOAD" ]; then
-	coveralls-lcov --repo-token "E1b0z2jufLOPrtenbS8Lcwaj0M7SnxhfX" total.info
+	coveralls-lcov --repo-token "WNXcTk62iW5uubE4zpzQp9r1XAqZSLCqw" total.info
 fi
 #ordeno
 rm -rf coverage
