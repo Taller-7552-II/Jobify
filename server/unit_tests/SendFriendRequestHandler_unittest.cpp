@@ -20,9 +20,9 @@ TEST(SendFriendRequestHandlerTests, SendFriendRequestOK){
 	EXPECT_TRUE(s.ok());
 
 	User user2(db);
-	user.setUsername("matias");
-	user.setPassword("qwerty");
-	Status s = user.DBcreate();
+	user2.setUsername("matias");
+	user2.setPassword("qwerty");
+	Status s = user2.DBcreate();
 	EXPECT_TRUE(s.ok());
 
 	vector<string> header_names;
