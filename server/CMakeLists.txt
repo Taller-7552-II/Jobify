@@ -7,7 +7,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 endif()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${warnings}")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=c++11 -pthread -fprofile-arcs -ftest-coverage -DCURL_STATICLIB -lcurl ") #tal vez incluir pthread como las demas, no hardcodeada
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=c++11 -pthread -fprofile-arcs -ftest-coverage -lcurl ") #tal vez incluir pthread como las demas, no hardcodeada
 
 # "-Wl,--as-needed" hace que solo se linkee con librerias que se usan en el ejecutable"
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--as-needed -L/usr/lib")
@@ -75,7 +75,7 @@ add_library(CRYPTO STATIC IMPORTED)
 set_property(TARGET CRYPTO PROPERTY IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/lib/Openssl/libcrypto.a")
 
 add_executable(Server src/main.cpp)
-target_link_libraries(Server ServerLib LevelDB Zlib  Snappy Bz2 Json Mongoose SSL CRYPTO Curl -lrt )
+target_link_libraries(Server ServerLib LevelDB Zlib Curl Snappy Bz2 Json Mongoose SSL CRYPTO -lrt )
 
 #TESTS
 
