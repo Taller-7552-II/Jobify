@@ -28,6 +28,9 @@ addons:
           - libquadmath0-dbg
           - zlib1g-dev
           - libbz2-dev
+          - curl-dev
+          - libcurl4
+          - libcurl4-openssl-dev
           - libsnappy-dev
 
 before_install:
@@ -37,6 +40,7 @@ before_install:
   - sudo apt-get install libcurl4-openssl-dev
   
 install:
+  - sudo apt-get install curl-dev
   - sudo apt-get install -qq g++-4.8
   - export CXX="g++-4.8"
   - cd ${TRAVIS_BUILD_DIR}
