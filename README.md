@@ -15,7 +15,6 @@ Trabajo Practico - Taller de Programacion II - 2do cuatrimestre 2016
 
 [![Coverage Status](https://coveralls.io/repos/github/Taller-7552-II/Jobify/badge.svg?branch=master)](https://coveralls.io/github/Taller-7552-II/Jobify?branch=master)
 
-
 ============================================================================================================
 Manual de instalación y uso para el Servidor
 ============================================================================================================
