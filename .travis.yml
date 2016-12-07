@@ -1,68 +1,12 @@
+sudo: required
+
 language: cpp
 
-compiler: 
-  - gcc
-addons:
-    apt:
-        sources:
-          - ubuntu-toolchain-r-test
-        packages:
-          - gcc-multilib
-          - gcc-5
-          - g++-5
-          - gcc-5-locales
-          - gcc-5-multilib
-          - g++-5-multilib
-          - libstdc++6-5-dbg
-          - lib32stdc++6-5-dbg
-          - libstdc++-5-doc
-          - libgcc1-dbg
-          - libgomp1-dbg
-          - libitm1-dbg
-          - libatomic1-dbg
-          - libasan2-dbg
-          - liblsan0-dbg
-          - libtsan0-dbg
-          - libubsan0-dbg
-          - libcilkrts5-dbg
-          - libquadmath0-dbg
-          - zlib1g-dev
-          - libbz2-dev
-          - libcurl4-openssl-dev
-          - libsnappy-dev
+services:
+  - docker
 
 before_install:
-  - sudo apt-get update
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
-  - sudo apt-get install libcurl4-openssl-dev
-  - sudo apt-get install libcurl3 php5-curl
-  
-install:
-  - sudo apt-get install -qq g++-4.8
-  - export CXX="g++-4.8"
-  - cd ${TRAVIS_BUILD_DIR}
-  # install latest LCOV (1.9 was failing for me) [1]
-  - wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
-  - tar xf lcov_1.11.orig.tar.gz
-  - sudo make -C lcov-1.11/ install
-  # install lcov to coveralls conversion + upload tool
-  - gem install coveralls-lcov
+- docker pull matisyo/jobify-docker:latest
+- docker run -d -p 127.0.0.1:80:4567 matisyo/jobify-docker /bin/sh -c "cd /home/travis; ./installer_ducker.sh;"
+- docker ps -a
 
-script:
-  - git clone https://github.com/Taller-7552-II/Jobify
-  - cd Jobify
-  - cd server
-  - chmod +x build.sh
-  - ./build.sh
-  - ./run_coverage.sh "UPLOAD"
-
-branches:
-  only:
-    - master
-
-notifications:
-  email: false
-
-os:
-  -linux
