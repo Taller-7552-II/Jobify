@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "GetChatHandler.h"
+#include "SendFriendRequestHandler.h"
 #include "DatabaseMockRAM.h"
 #include "HttpRequestConcrete.h"
 #include "User.h"
@@ -7,14 +7,20 @@
 
 using namespace std;
 
-TEST(GetChatHandlerTests, ChatGetsOK){
+TEST(SendFriendRequestHandlerTests, SendFriendRequestOK){
 	Database* db = new DatabaseMockRAM;
 	TokenAuthenticator* tk = new TokenAuthenticator;
 	string token = tk->createToken("gonzalo");
-	GetChatHandler handler(db, tk);
+	SendFriendRequestHandler handler(db, tk);
 
 	User user(db);
-	user.setUsername("gonzalo");
+	user.setUsername("juampa");
+	user.setPassword("qwerty");
+	Status s = user.DBcreate();
+	EXPECT_TRUE(s.ok());
+
+	User user2(db);
+	user.setUsername("matias");
 	user.setPassword("qwerty");
 	Status s = user.DBcreate();
 	EXPECT_TRUE(s.ok());
@@ -24,7 +30,7 @@ TEST(GetChatHandlerTests, ChatGetsOK){
 	vector<string> header_values;
 	header_values.push_back(token);
 	struct mg_connection* conn = new struct mg_connection;
-	struct http_message* hmsg = new_http_message("GET", "/chat/gonzalo/matias", "", &header_names, &header_values);
+	struct http_message* hmsg = new_http_message("POST", "/users/juampa/addFriend/matias", "", &header_names, &header_values);
 
 
 	HttpRequestConcrete req;

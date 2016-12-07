@@ -13,7 +13,7 @@ LikeHandler::~LikeHandler()
 }
 
 bool LikeHandler::isMyRequest(HttpRequest &hmsg){
-    // POST /like/'username'/'otrouser' quiere decir borrar el usuario
+    // PUT /like/'username'/'otrouser' quiere decir borrar el usuario
     Server_Logger* log = Server_Logger::getInstance();
     log->Log("Verifica que se trate de un Handler tipo LikeHandler",INFO);
     if( hmsg.getUriParsedByIndex(0) == HttpRequest::LIKE &&
