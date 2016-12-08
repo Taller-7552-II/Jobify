@@ -5,10 +5,9 @@ language: cpp
 services:
   - docker
   
-script: make
-
 before_install:
 - docker pull matisyo/jobify-docker:latest
-- docker run -d -p 127.0.0.1:80:4567 matisyo/jobify-docker /bin/sh -c "cd /home/travis; rm -rf Jobify; ./installer_ducker.sh;"
+- docker run -d -p 127.0.0.1:80:4567 matisyo/jobify-docker /bin/sh -c "cd /home/travis; rm -rf Jobify"
 - docker ps -a
 
+script: ./installer_ducker.sh;
