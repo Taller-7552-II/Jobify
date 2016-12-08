@@ -9,5 +9,5 @@ file(GLOB_RECURSE _SOURCES_CPP_TESTS "*.cpp")
 	
 add_executable(Test ${_SOURCES_CPP_TESTS})
 # linkeo con todo por las dudas, total con "-Wl,--as-needed" linkeo solo con las que uso
-target_link_libraries(Test ServerLib LevelDB Zlib Snappy Bz2 Json Mongoose GMock GMock_main SSL CRYPTO Curl -lrt)
+target_link_libraries(Test ServerLib LevelDB Curl Zlib Snappy Bz2 Json Mongoose GMock GMock_main SSL CRYPTO -lrt)
 
