@@ -8,8 +8,10 @@ Trabajo Practico - Taller de Programacion II - 2do cuatrimestre 2016
 * [Guzzardi Gonzalo](https://github.com/gonzaloguzzardi) 94258
 * [Marshall Juan Patricio](https://github.com/JuanPatricioMarshall) 95471
 
-##Code Coverage
+##Travis Integration
+[![Build Status](https://travis-ci.org/Taller-7552-II/Jobify-app.svg?branch=master)](https://travis-ci.org/Taller-7552-II/Jobify-app)
 
+##Code Coverage
 [![Coverage Status](https://coveralls.io/repos/github/Taller-7552-II/Jobify/badge.svg)](https://coveralls.io/github/Taller-7552-II/Jobify)
 
 ============================================================================================================
