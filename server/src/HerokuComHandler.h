@@ -14,8 +14,8 @@ class HerokuComHandler
         static size_t matiMethodComeback(char * data, size_t size, size_t nmemb,struct url_data *datax, void * p);
         size_t write_data(char *ptr, size_t size, size_t nmemb, struct url_data *data);
         char* GET(char* url);
-        char* DELETE(char* statham);
-        char* POST(char* jason,char* statham);
+       /* char* DELETE(char* statham);
+        char* POST(char* jason,char* statham);*/
     protected:
 
     private:
