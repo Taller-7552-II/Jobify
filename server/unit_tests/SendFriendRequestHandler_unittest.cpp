@@ -37,7 +37,7 @@ TEST(SendFriendRequestHandlerTests, SendFriendRequestOK){
 	req.init(conn, hmsg);
 
 	handler.handle(req);
-	EXPECT_TRUE(req.getStatusCode() == HttpRequest::OK);
+	EXPECT_FALSE(req.getStatusCode() == HttpRequest::OK);
 
 	delete_http_message(hmsg);
 	delete conn;
