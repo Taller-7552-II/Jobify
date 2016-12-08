@@ -22,7 +22,7 @@ TEST(SendFriendRequestHandlerTests, SendFriendRequestOK){
 	User user2(db);
 	user2.setUsername("matias");
 	user2.setPassword("qwerty");
-	Status s = user2.DBcreate();
+	Status s2 = user2.DBcreate();
 	EXPECT_TRUE(s.ok());
 
 	vector<string> header_names;
