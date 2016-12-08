@@ -9,7 +9,7 @@ Trabajo Practico - Taller de Programacion II - 2do cuatrimestre 2016
 * [Marshall Juan Patricio](https://github.com/JuanPatricioMarshall) 95471
 
 ##Travis Integration
-[![Build Status](https://travis-ci.org/Taller-7552-II/Jobify-app.svg?branch=master)](https://travis-ci.org/Taller-7552-II/Jobify-app)
+[![Build Status](https://travis-ci.org/Taller-7552-II/Jobify.svg?branch=master)
 
 ##Code Coverage
 [![Coverage Status](https://coveralls.io/repos/github/Taller-7552-II/Jobify/badge.svg)](https://coveralls.io/github/Taller-7552-II/Jobify)
