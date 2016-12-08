@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - total.info - src/ChatData.h</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">src</a> - ChatData.h<span style="font-size: 80%;"> (source / <a href="ChatData.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">total.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-12-08</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #ifndef CHATDATA_H</a>
+<span class="lineNum">       2 </span>            : #define CHATDATA_H
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : #include &quot;DBElement.h&quot;
+<span class="lineNum">       5 </span>            : #include &lt;vector&gt;
+<span class="lineNum">       6 </span>            : #include &lt;string&gt;
+<span class="lineNum">       7 </span>            : #include &lt;algorithm&gt;
+<span class="lineNum">       8 </span>            : #include &quot;leveldb/status.h&quot;
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : class User;
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : 
+<span class="lineNum">      13 </span>            : //!Clase que contiene la informacion del usuario.
+<span class="lineNum">      14 </span>            : /*!Tiene los datos del usuario y se encarga de manejarlos\
+<span class="lineNum">      15 </span>            : Hereda de DBElement.
+<span class="lineNum">      16 </span>            : */
+<span class="lineNum">      17 </span>            : class ChatData : public DBElement
+<span class="lineNum">      18 </span>            : {
+<span class="lineNum">      19 </span>            :     public:
+<span class="lineNum">      20 </span>            :         friend class User;
+<span class="lineNum">      21 </span>            : 
+<span class="lineNum">      22 </span>            : 
+<span class="lineNum">      23 </span>            :         //!Funcion que inicializa la clase.
+<span class="lineNum">      24 </span>            :         /*!Realiza la misma inicializacion que DBElement, pero ademas sus variables particulares
+<span class="lineNum">      25 </span>            :         las inicia en &quot;&quot;, 0 o en el caso de couta_max, en 10GB.
+<span class="lineNum">      26 </span>            :         */
+<span class="lineNum">      27 </span>            :         ChatData(Database* db, DatabaseWriteBatch* dbbatch = NULL);
+<span class="lineNum">      28 </span>            :         virtual ~ChatData();
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            :         //!Funcion que establece el username.
+<a name="31"><span class="lineNum">      31 </span>            :         /*!Recibe un string y se lo asigna a username.</a>
+<span class="lineNum">      32 </span>            :         */
+<span class="lineNum">      33 </span><span class="lineCov">          9 :         void setUsername(std::string name) { this-&gt;username = name; }</span>
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : 
+<span class="lineNum">      36 </span>            :         //!Funcion que cambia la lista de notificaciones.
+<a name="37"><span class="lineNum">      37 </span>            :         /*!Recibe como string las nuevas notificaciones y la asigna a la variable.</a>
+<span class="lineNum">      38 </span>            :         */
+<a name="39"><span class="lineNum">      39 </span><span class="lineCov">          2 :         void addMensajes(std::string u) { this-&gt;mensajes.push_back(u); }</span></a>
+<span class="lineNum">      40 </span>            :         //!Funcion que devuelve el username.
+<span class="lineNum">      41 </span><span class="lineCov">          2 :         std::string getUsername() { return username; }</span>
+<span class="lineNum">      42 </span>            :         //!Funcion que obtiene la metadata del usuario de la base de datos.
+<span class="lineNum">      43 </span>            :         Status DBget();
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            :         //!Funcion que agrega una notificacion en la base de datos
+<span class="lineNum">      47 </span>            :         Status DBaddMensajes(std::string u);
+<span class="lineNum">      48 </span>            :         //!Funcion que devuelve el perfil del usuario
+<span class="lineNum">      49 </span>            :         /*!Devuelve el perfil del usuario en fortato json
+<span class="lineNum">      50 </span>            :         */
+<span class="lineNum">      51 </span>            :         std::string getProfile();
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            :         //!Funcion que crea al usuario en la base de datos.
+<span class="lineNum">      54 </span>            :         /*!Si no existe ya el usuario, lo crea y registra la fecha de inscripcion.
+<span class="lineNum">      55 </span>            :         */
+<span class="lineNum">      56 </span>            :         Status DBcreate();
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            :     protected:
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            :         //!Funcion que establece la key.
+<span class="lineNum">      62 </span>            :         /*!Toma la variable username y la establece como key, luego de agrgarle &quot;.usertoken&quot;.
+<span class="lineNum">      63 </span>            :         */
+<span class="lineNum">      64 </span>            :         virtual void _setKey();
+<span class="lineNum">      65 </span>            : 
+<span class="lineNum">      66 </span>            :         //!Funcion que establece el value.
+<span class="lineNum">      67 </span>            :         /*!Toma las variables join_date,  email y forma un json.
+<span class="lineNum">      68 </span>            :         */
+<span class="lineNum">      69 </span>            :         virtual void _setValue();
+<span class="lineNum">      70 </span>            : 
+<span class="lineNum">      71 </span>            :         //!Funcion que establece varias variables.
+<span class="lineNum">      72 </span>            :         /*!Toma la variable value y a partir de ella obtiene join_date, email y ultima_ubicacion.
+<span class="lineNum">      73 </span>            :         */
+<span class="lineNum">      74 </span>            :         virtual void _setValueVars();
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            :     private:
+<span class="lineNum">      77 </span>            :         //!Variable string que contiene username.
+<span class="lineNum">      78 </span>            :         std::string username;
+<span class="lineNum">      79 </span>            : 
+<span class="lineNum">      80 </span>            : 
+<span class="lineNum">      81 </span>            :         //!Variable para mensajes
+<span class="lineNum">      82 </span>            :         std::vector&lt;std::string&gt; mensajes;
+<span class="lineNum">      83 </span>            :         // agregar lo que haga falta
+<span class="lineNum">      84 </span>            : 
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            :         //!Funcion que elimina usuario de la base de datos.
+<span class="lineNum">      87 </span>            :         Status DBerase();
+<span class="lineNum">      88 </span>            : 
+<span class="lineNum">      89 </span>            : 
+<span class="lineNum">      90 </span>            : };
+<span class="lineNum">      91 </span>            : 
+<span class="lineNum">      92 </span>            : #endif // CHATDATA_H
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

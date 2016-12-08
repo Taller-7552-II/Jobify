@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - total.info - src/EventHandlerRemovesAuthentication.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">src</a> - EventHandlerRemovesAuthentication.cpp<span style="font-size: 80%;"> (source / <a href="EventHandlerRemovesAuthentication.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">total.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">17</td>
+            <td class="headerCovTableEntry">17</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-12-08</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryMed">75.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;EventHandlerRemovesAuthentication.h&quot;</a>
+<span class="lineNum">       2 </span>            : #include &quot;leveldb/status.h&quot;
+<span class="lineNum">       3 </span>            : #include &quot;HttpRequest.h&quot;
+<a name="4"><span class="lineNum">       4 </span>            : #include &quot;Logger.h&quot;</a>
+<span class="lineNum">       5 </span>            : 
+<span class="lineNum">       6 </span><span class="lineCov">          5 : EventHandlerRemovesAuthentication::EventHandlerRemovesAuthentication(Database *db, TokenAuthenticator *a) : EventHandler(db), auth(a)</span>
+<span class="lineNum">       7 </span>            : {
+<span class="lineNum">       8 </span>            :     //ctor
+<a name="9"><span class="lineNum">       9 </span><span class="lineCov">          5 : }</span></a>
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span><span class="lineCov">          5 : EventHandlerRemovesAuthentication::~EventHandlerRemovesAuthentication()</span>
+<span class="lineNum">      12 </span>            : {
+<span class="lineNum">      13 </span>            :     //dtor
+<a name="14"><span class="lineNum">      14 </span><span class="lineCov">          5 : }</span></a>
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span><span class="lineCov">          5 : void EventHandlerRemovesAuthentication::_check_permission(HttpRequest &amp;hmsg){</span>
+<span class="lineNum">      17 </span><span class="lineCov">          5 :     std::string username = hmsg.getUsername();</span>
+<span class="lineNum">      18 </span><span class="lineCov">         10 :     std::string token = hmsg.getConnToken();</span>
+<span class="lineNum">      19 </span><span class="lineCov">          5 :     Server_Logger* log = Server_Logger::getInstance();</span>
+<span class="lineNum">      20 </span><span class="lineCov">          5 :     log-&gt;Log(&quot;Se recibe la httprequest y se verifica token&quot;,INFO);</span>
+<span class="lineNum">      21 </span><span class="lineCov">          5 :     log-&gt;Log(&quot;El username de la request es : &quot;+username,DEBUG);</span>
+<span class="lineNum">      22 </span><span class="lineCov">          5 :     log-&gt;Log(&quot;El token de la request es : &quot;+username,DEBUG);</span>
+<span class="lineNum">      23 </span>            :     // ver si no existen los campos (va, va a fallar la autenticacion si no)
+<span class="lineNum">      24 </span><span class="lineCov">          5 :     if(this-&gt;auth-&gt;isValidToken(username, token)){</span>
+<span class="lineNum">      25 </span><span class="lineCov">          4 :         this-&gt;_handle(hmsg);</span>
+<span class="lineNum">      26 </span>            :     } else {
+<span class="lineNum">      27 </span><span class="lineCov">          1 :         log-&gt;Log(&quot;No era una sesion valida&quot;, WARNING);</span>
+<span class="lineNum">      28 </span><span class="lineCov">          1 :         hmsg.setResponse(Status::IOError(&quot;la sesion indicada no era valida&quot;));</span>
+<span class="lineNum">      29 </span><span class="lineCov">          5 :     }</span>
+<span class="lineNum">      30 </span><span class="lineCov">          5 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

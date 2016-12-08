@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - total.info - src/User.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">src</a> - User.cpp<span style="font-size: 80%;"> (source / <a href="User.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">total.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">32</td>
+            <td class="headerCovTableEntry">33</td>
+            <td class="headerCovTableEntryHi">97.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-12-08</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntryMed">83.3 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;User.h&quot;</a>
+<span class="lineNum">       2 </span>            : #include &quot;UserMetadata.h&quot;
+<span class="lineNum">       3 </span>            : #include &quot;Logger.h&quot;
+<span class="lineNum">       4 </span>            : 
+<a name="5"><span class="lineNum">       5 </span>            : #include &quot;Database.h&quot;</a>
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span><span class="lineCov">         51 : User::User(Database* db, DatabaseWriteBatch* dbbatch) : DBElement(db, dbbatch)</span>
+<span class="lineNum">       8 </span>            : {
+<span class="lineNum">       9 </span>            :     //ctor
+<a name="10"><span class="lineNum">      10 </span><span class="lineCov">         51 : }</span></a>
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span><span class="lineCov">         51 : User::~User()</span>
+<span class="lineNum">      13 </span>            : {
+<span class="lineNum">      14 </span>            :     //dtor
+<span class="lineNum">      15 </span><span class="lineCov">         51 : }</span>
+<a name="16"><span class="lineNum">      16 </span>            : </a>
+<span class="lineNum">      17 </span>            : // asumo que tengo el campo username correcto
+<span class="lineNum">      18 </span><span class="lineCov">          6 : Status User::DBerase(){</span>
+<span class="lineNum">      19 </span><span class="lineCov">          6 :     Status s;</span>
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span><span class="lineCov">          6 :     this-&gt;startBatch();</span>
+<span class="lineNum">      22 </span>            :     // borrar metadatos
+<span class="lineNum">      23 </span><span class="lineCov">         12 :     UserMetadata user_metadata(db, this-&gt;batch);</span>
+<span class="lineNum">      24 </span><span class="lineCov">          6 :     user_metadata.setUsername(this-&gt;getUsername());</span>
+<span class="lineNum">      25 </span><span class="lineCov">          6 :     s = user_metadata.DBerase();</span>
+<span class="lineNum">      26 </span>            :     // ver status
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span><span class="lineCov">          6 :     s = this-&gt;erase();</span>
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span><span class="lineCov">         12 :     return this-&gt;endBatch();</span>
+<a name="31"><span class="lineNum">      31 </span>            : }</a>
+<span class="lineNum">      32 </span>            : 
+<span class="lineNum">      33 </span><span class="lineCov">         45 : Status User::DBcreate(){</span>
+<span class="lineNum">      34 </span><span class="lineCov">         45 :     Status s;</span>
+<span class="lineNum">      35 </span><span class="lineCov">         45 :     Server_Logger* log = Server_Logger::getInstance();</span>
+<span class="lineNum">      36 </span><span class="lineCov">         45 :     log-&gt;Log(&quot;Corrobora en la base de datos si ya existe el usuario&quot;,INFO);</span>
+<span class="lineNum">      37 </span><span class="lineCov">         45 :     s = this-&gt;get();</span>
+<span class="lineNum">      38 </span><span class="lineCov">         45 :     if(!s.IsNotFound()){</span>
+<span class="lineNum">      39 </span><span class="lineCov">          1 :         log-&gt;Log(&quot;El usuario ya existe&quot;,WARNING);</span>
+<span class="lineNum">      40 </span><span class="lineCov">          1 :         return Status::NotFound(&quot;Username already taken&quot;);</span>
+<span class="lineNum">      41 </span>            :     }
+<span class="lineNum">      42 </span><span class="lineCov">         44 :     log-&gt;Log(&quot;El usuario no existe&quot;,INFO);</span>
+<span class="lineNum">      43 </span><span class="lineCov">         44 :     this-&gt;startBatch();</span>
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span><span class="lineCov">         88 :     UserMetadata user_metadata(db, this-&gt;batch);</span>
+<span class="lineNum">      46 </span><span class="lineCov">         44 :     user_metadata.setUsername(this-&gt;getUsername());</span>
+<span class="lineNum">      47 </span><span class="lineCov">         44 :     s = user_metadata.DBcreate();</span>
+<span class="lineNum">      48 </span><span class="lineCov">         44 :     if(!s.ok()){</span>
+<span class="lineNum">      49 </span><span class="lineNoCov">          0 :         return s;</span>
+<span class="lineNum">      50 </span>            :     }
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span><span class="lineCov">         44 :     s = this-&gt;put();</span>
+<span class="lineNum">      53 </span>            :     // ver status
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span><span class="lineCov">         89 :     return this-&gt;endBatch();</span>
+<a name="56"><span class="lineNum">      56 </span>            : }</a>
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span><span class="lineCov">          7 : Status User::DBget(){</span>
+<span class="lineNum">      59 </span><span class="lineCov">          7 :     Status s;</span>
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span><span class="lineCov">          7 :     s = this-&gt;get();</span>
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span><span class="lineCov">          7 :     return s;</span>
+<span class="lineNum">      64 </span>            : }
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

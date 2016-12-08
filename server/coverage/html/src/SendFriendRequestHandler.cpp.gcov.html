@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - total.info - src/SendFriendRequestHandler.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">src</a> - SendFriendRequestHandler.cpp<span style="font-size: 80%;"> (source / <a href="SendFriendRequestHandler.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">total.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntry">36</td>
+            <td class="headerCovTableEntryLo">38.9 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-12-08</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryLo">60.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;SendFriendRequestHandler.h&quot;</a>
+<span class="lineNum">       2 </span>            : #include &quot;UserMetadata.h&quot;
+<span class="lineNum">       3 </span>            : #include &quot;Logger.h&quot;
+<a name="4"><span class="lineNum">       4 </span>            : #include &quot;Notifications.h&quot;</a>
+<span class="lineNum">       5 </span>            : 
+<span class="lineNum">       6 </span><span class="lineCov">          1 : SendFriendRequestHandler::SendFriendRequestHandler(Database *db, TokenAuthenticator *a) : EventHandlerChecksAuthentication(db, a)</span>
+<span class="lineNum">       7 </span>            : {
+<span class="lineNum">       8 </span>            :     //ctor
+<a name="9"><span class="lineNum">       9 </span><span class="lineCov">          1 : }</span></a>
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span><span class="lineCov">          1 : SendFriendRequestHandler::~SendFriendRequestHandler()</span>
+<span class="lineNum">      12 </span>            : {
+<span class="lineNum">      13 </span>            :     //dtor
+<a name="14"><span class="lineNum">      14 </span><span class="lineCov">          1 : }</span></a>
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span><span class="lineCov">          1 : bool SendFriendRequestHandler::isMyRequest(HttpRequest &amp;hmsg){</span>
+<span class="lineNum">      17 </span>            :     // POST /users/'username'/addFriend/'username2' quiere decir modificar perfil de tal usuario
+<span class="lineNum">      18 </span><span class="lineCov">          1 :     Server_Logger* log = Server_Logger::getInstance();</span>
+<span class="lineNum">      19 </span><span class="lineCov">          1 :     log-&gt;Log(&quot;Verifica que se trate de un Handler tipo SendFriendRequestHandler&quot;,INFO);</span>
+<span class="lineNum">      20 </span><span class="lineCov">          3 :     if(hmsg.getUriParsedByIndex(0) == HttpRequest::USERS &amp;&amp;</span>
+<span class="lineNum">      21 </span><span class="lineCov">          2 :        hmsg.getUriParsedByIndex(2) == HttpRequest::ADD_FRIEND &amp;&amp;</span>
+<span class="lineNum">      22 </span><span class="lineCov">          2 :         hmsg.getUriCantCampos() == 4 &amp;&amp;</span>
+<span class="lineNum">      23 </span><span class="lineCov">          3 :         hmsg.getUriType() ==  HttpRequest::ELEMENT_URI &amp;&amp;</span>
+<span class="lineNum">      24 </span><span class="lineCov">          1 :         hmsg.getMethod() == HttpRequest::POST){</span>
+<span class="lineNum">      25 </span><span class="lineCov">          1 :         log-&gt;Log(&quot;Confirma que es un Handler tipo SendFriendRequestHandler&quot;,INFO);</span>
+<span class="lineNum">      26 </span><span class="lineCov">          1 :         return true;</span>
+<span class="lineNum">      27 </span>            :     }
+<span class="lineNum">      28 </span><span class="lineNoCov">          0 :     return false;</span>
+<a name="29"><span class="lineNum">      29 </span>            : }</a>
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span><span class="lineNoCov">          0 : void SendFriendRequestHandler::_handle(HttpRequest &amp;hmsg){</span>
+<span class="lineNum">      32 </span><span class="lineNoCov">          0 :     Status s;</span>
+<span class="lineNum">      33 </span>            : 
+<span class="lineNum">      34 </span><span class="lineNoCov">          0 :     Server_Logger* log = Server_Logger::getInstance();</span>
+<span class="lineNum">      35 </span><span class="lineNoCov">          0 :     std::string username = hmsg.getUsername();</span>
+<span class="lineNum">      36 </span><span class="lineNoCov">          0 :     log-&gt;Log(&quot;El campo recibido por username es : &quot;+username,DEBUG);</span>
+<span class="lineNum">      37 </span><span class="lineNoCov">          0 :     if(username == &quot;&quot;){</span>
+<span class="lineNum">      38 </span><span class="lineNoCov">          0 :         hmsg.setResponse(Status::InvalidArgument(&quot;&quot;));</span>
+<span class="lineNum">      39 </span><span class="lineNoCov">          0 :         return;</span>
+<span class="lineNum">      40 </span>            :     }
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span><span class="lineNoCov">          0 :     std::string friend_username = hmsg.getUriStringParsedByIndex(3);</span>
+<span class="lineNum">      43 </span><span class="lineNoCov">          0 :     log-&gt;Log(&quot;El campo recibido por friend_username es : &quot;+friend_username,DEBUG);</span>
+<span class="lineNum">      44 </span><span class="lineNoCov">          0 :     if(friend_username == &quot;&quot;){</span>
+<span class="lineNum">      45 </span><span class="lineNoCov">          0 :         hmsg.setResponse(Status::InvalidArgument(&quot;&quot;));</span>
+<span class="lineNum">      46 </span><span class="lineNoCov">          0 :         return;</span>
+<span class="lineNum">      47 </span>            :     }
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span><span class="lineNoCov">          0 :     UserMetadata user_metadata(db);</span>
+<span class="lineNum">      50 </span><span class="lineNoCov">          0 :     user_metadata.setUsername(friend_username);</span>
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span><span class="lineNoCov">          0 :     std::string notificacion = std::to_string(N_ADD_FRIEND) + &quot;.&quot; + username;</span>
+<span class="lineNum">      53 </span><span class="lineNoCov">          0 :     s = user_metadata.DBaddNotification(notificacion);</span>
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span>            :     // ver status
+<span class="lineNum">      56 </span><span class="lineNoCov">          0 :     if(s.ok()){</span>
+<span class="lineNum">      57 </span><span class="lineNoCov">          0 :         hmsg.setResponse(s, &quot;Notification sent&quot;);</span>
+<span class="lineNum">      58 </span>            :     } else {
+<span class="lineNum">      59 </span><span class="lineNoCov">          0 :         hmsg.setResponse(s);</span>
+<span class="lineNum">      60 </span><span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">      61 </span>            : }
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

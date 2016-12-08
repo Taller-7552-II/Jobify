@@ -1,0 +1,423 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - total.info - src/HttpRequestConcrete.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">src</a> - HttpRequestConcrete.cpp<span style="font-size: 80%;"> (source / <a href="HttpRequestConcrete.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">total.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">186</td>
+            <td class="headerCovTableEntry">225</td>
+            <td class="headerCovTableEntryMed">82.7 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-12-08</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">23</td>
+            <td class="headerCovTableEntry">26</td>
+            <td class="headerCovTableEntryMed">88.5 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;HttpRequestConcrete.h&quot;</a>
+<span class="lineNum">       2 </span>            : #include &quot;json/json.h&quot;
+<span class="lineNum">       3 </span>            : #include &quot;JsonSerializer.h&quot;
+<span class="lineNum">       4 </span>            : #include &lt;iostream&gt;
+<span class="lineNum">       5 </span>            : #include &quot;Logger.h&quot;
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : using namespace Json;
+<span class="lineNum">       8 </span>            : using namespace leveldb;
+<span class="lineNum">       9 </span>            : 
+<a name="10"><span class="lineNum">      10 </span>            : /// funciones de ultilidad para testeo</a>
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span><span class="lineCov">        280 : mg_str* new_mg_str(std::string s, mg_str* dest){</span>
+<span class="lineNum">      13 </span><span class="lineCov">        280 :     if(dest == NULL)</span>
+<span class="lineNum">      14 </span><span class="lineNoCov">          0 :         dest = new struct mg_str;</span>
+<span class="lineNum">      15 </span><span class="lineCov">        280 :     char* temp_str = (char*)malloc(s.size());</span>
+<span class="lineNum">      16 </span><span class="lineCov">       2212 :     for(int i = 0, size = s.size(); i &lt; size; ++i){</span>
+<span class="lineNum">      17 </span><span class="lineCov">       1932 :         temp_str[i] = s[i];</span>
+<span class="lineNum">      18 </span>            :     }
+<span class="lineNum">      19 </span><span class="lineCov">        280 :     dest-&gt;p = temp_str;</span>
+<span class="lineNum">      20 </span><span class="lineCov">        280 :     dest-&gt;len = s.size();</span>
+<span class="lineNum">      21 </span>            : 
+<span class="lineNum">      22 </span><span class="lineCov">        280 :     return dest;</span>
+<a name="23"><span class="lineNum">      23 </span>            : }</a>
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span><span class="lineNoCov">          0 : void delete_mg_str(struct mg_str* temp){</span>
+<span class="lineNum">      26 </span><span class="lineNoCov">          0 :     if(temp != NULL){</span>
+<span class="lineNum">      27 </span><span class="lineNoCov">          0 :         if(temp-&gt;p != NULL)</span>
+<span class="lineNum">      28 </span><span class="lineNoCov">          0 :             free((void*)temp-&gt;p);</span>
+<span class="lineNum">      29 </span><span class="lineNoCov">          0 :         delete temp;</span>
+<span class="lineNum">      30 </span>            :     }
+<a name="31"><span class="lineNum">      31 </span><span class="lineNoCov">          0 : }</span></a>
+<span class="lineNum">      32 </span>            : 
+<span class="lineNum">      33 </span><span class="lineCov">         46 : struct http_message* new_http_message(std::string method, std::string uri, std::string body, std::vector&lt;std::string&gt;* header_names, std::vector&lt;std::string&gt;* header_values, std::string query_string){</span>
+<span class="lineNum">      34 </span><span class="lineCov">         46 :     struct http_message* temp = new struct http_message;</span>
+<span class="lineNum">      35 </span>            : 
+<span class="lineNum">      36 </span><span class="lineCov">         46 :     new_mg_str(method, &amp;(temp-&gt;method));</span>
+<span class="lineNum">      37 </span><span class="lineCov">         46 :     new_mg_str(uri, &amp;temp-&gt;uri);</span>
+<span class="lineNum">      38 </span><span class="lineCov">         46 :     new_mg_str(&quot;HTTP/1.1&quot;, &amp;temp-&gt;proto);</span>
+<span class="lineNum">      39 </span><span class="lineCov">         46 :     new_mg_str(query_string, &amp;temp-&gt;query_string);</span>
+<span class="lineNum">      40 </span><span class="lineCov">         46 :     new_mg_str(body, &amp;temp-&gt;body);</span>
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span><span class="lineCov">         46 :     if(header_names != NULL){</span>
+<span class="lineNum">      43 </span><span class="lineCov">         50 :         for(int i = 0, size = header_names-&gt;size(); i &lt; size; ++i){</span>
+<span class="lineNum">      44 </span><span class="lineCov">         25 :             new_mg_str(header_names-&gt;at(i), temp-&gt;header_names+i);</span>
+<span class="lineNum">      45 </span><span class="lineCov">         25 :             new_mg_str(header_values-&gt;at(i), temp-&gt;header_values+i);</span>
+<span class="lineNum">      46 </span>            :         }
+<span class="lineNum">      47 </span>            :     }
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span><span class="lineCov">         46 :     return temp;</span>
+<a name="50"><span class="lineNum">      50 </span>            : }</a>
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span><span class="lineCov">         46 : void delete_http_message(struct http_message* temp){</span>
+<span class="lineNum">      53 </span><span class="lineCov">         46 :     if(temp != NULL){</span>
+<span class="lineNum">      54 </span><span class="lineCov">         46 :         delete temp;</span>
+<span class="lineNum">      55 </span>            :     }
+<a name="56"><span class="lineNum">      56 </span><span class="lineCov">         46 : }</span></a>
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span><span class="lineCov">         51 : HttpRequestConcrete::HttpRequestConcrete() : nc(NULL), hmsg(NULL), response(&quot;&quot;), statusCode(StatusCode::INTERNAL_ERROR)</span>
+<span class="lineNum">      59 </span>            : {
+<span class="lineNum">      60 </span>            :     //ctor
+<a name="61"><span class="lineNum">      61 </span><span class="lineCov">         51 : }</span></a>
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span><span class="lineCov">         46 : void HttpRequestConcrete::init(struct mg_connection* n_conn, struct http_message* n_hmsg)</span>
+<span class="lineNum">      64 </span>            : {
+<span class="lineNum">      65 </span><span class="lineCov">         46 :     this-&gt;nc = n_conn;</span>
+<span class="lineNum">      66 </span><span class="lineCov">         46 :     this-&gt;hmsg = n_hmsg;</span>
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span><span class="lineCov">         46 :     Server_Logger* log = Server_Logger::getInstance();</span>
+<span class="lineNum">      69 </span><span class="lineCov">         46 :     log-&gt;Log(&quot;Inicializando http request concrete&quot;,INFO);</span>
+<span class="lineNum">      70 </span>            : 
+<span class="lineNum">      71 </span><span class="lineCov">         46 :     std::string body = &quot;&quot;;</span>
+<span class="lineNum">      72 </span><span class="lineCov">         46 :     body.append(n_hmsg-&gt;body.p, n_hmsg-&gt;body.len);</span>
+<span class="lineNum">      73 </span>            : 
+<span class="lineNum">      74 </span><span class="lineCov">         92 :     Reader reader;</span>
+<span class="lineNum">      75 </span><span class="lineCov">         92 :     reader.parse(body.c_str(), json_body);</span>
+<a name="76"><span class="lineNum">      76 </span><span class="lineCov">         46 : }</span></a>
+<span class="lineNum">      77 </span>            : 
+<span class="lineNum">      78 </span><span class="lineCov">         43 : HttpRequestConcrete::~HttpRequestConcrete()</span>
+<span class="lineNum">      79 </span>            : {
+<span class="lineNum">      80 </span>            : 
+<span class="lineNum">      81 </span><span class="lineCov">         43 : }</span>
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span>            : /*void* HttpRequestConcrete::getSender(){
+<span class="lineNum">      84 </span>            : }
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            : void* HttpRequestConcrete::getReceiver(){
+<a name="87"><span class="lineNum">      87 </span>            : }*/</a>
+<span class="lineNum">      88 </span>            : 
+<span class="lineNum">      89 </span><span class="lineCov">         36 : void HttpRequestConcrete::setResponse(Status s, std::string r){</span>
+<span class="lineNum">      90 </span>            :     // agregar aca si hay mas status
+<span class="lineNum">      91 </span><span class="lineCov">         36 :     Server_Logger* log = Server_Logger::getInstance();</span>
+<span class="lineNum">      92 </span><span class="lineCov">         36 :     log-&gt;Log(&quot;HttpRequest : seteando respuesta&quot;,INFO);</span>
+<span class="lineNum">      93 </span>            : 
+<span class="lineNum">      94 </span><span class="lineCov">         36 :     if(s.ok()){                                 // todo ok</span>
+<span class="lineNum">      95 </span><span class="lineCov">         15 :         log-&gt;Log(&quot;Respuesta OK&quot;,INFO);</span>
+<span class="lineNum">      96 </span><span class="lineCov">         15 :         this-&gt;statusCode = StatusCode::OK;</span>
+<span class="lineNum">      97 </span><span class="lineCov">         21 :     } else if(s.IsNotFound()){                  // no se encontro el registro</span>
+<span class="lineNum">      98 </span><span class="lineCov">          7 :         log-&gt;Log(&quot;Respuesta ERROR: NOT FOUND&quot;,WARNING);</span>
+<span class="lineNum">      99 </span><span class="lineCov">          7 :         this-&gt;statusCode = StatusCode::NOT_FOUND;</span>
+<span class="lineNum">     100 </span><span class="lineCov">         14 :     } else if(s.IsIOError()){                   // error de autorizacion</span>
+<span class="lineNum">     101 </span><span class="lineCov">          6 :         log-&gt;Log(&quot;Respuesta ERROR: UNAUTHORIZED&quot;,WARNING);</span>
+<span class="lineNum">     102 </span><span class="lineCov">          6 :         this-&gt;statusCode = StatusCode::UNAUTHORIZED;</span>
+<span class="lineNum">     103 </span>            :     }
+<span class="lineNum">     104 </span>            : 
+<span class="lineNum">     105 </span><span class="lineCov">         36 :     if(r == &quot;&quot;){</span>
+<span class="lineNum">     106 </span><span class="lineCov">         19 :         r = s.ToString();</span>
+<span class="lineNum">     107 </span><span class="lineCov">        195 :         for(int i = 0; i &lt; r.length(); i++){</span>
+<span class="lineNum">     108 </span><span class="lineCov">        193 :             if(r[i] == ':'){</span>
+<span class="lineNum">     109 </span><span class="lineCov">         17 :                 r.erase(0, i+2);</span>
+<span class="lineNum">     110 </span><span class="lineCov">         17 :                 break;</span>
+<span class="lineNum">     111 </span>            :             }
+<span class="lineNum">     112 </span>            :         }
+<span class="lineNum">     113 </span>            :     }
+<span class="lineNum">     114 </span>            : 
+<span class="lineNum">     115 </span><span class="lineCov">         36 :     if(r.size() &gt; 0 &amp;&amp; r[0] != '{'){</span>
+<span class="lineNum">     116 </span><span class="lineCov">         26 :         this-&gt;response = &quot;&quot;;</span>
+<span class="lineNum">     117 </span><span class="lineCov">         26 :         JsonSerializer serializer;</span>
+<span class="lineNum">     118 </span><span class="lineCov">         26 :         serializer.addValueToObjectList(response, &quot;status&quot;, r);</span>
+<span class="lineNum">     119 </span><span class="lineCov">         26 :         serializer.turnObjectListToObject(response);</span>
+<span class="lineNum">     120 </span>            :     } else {
+<span class="lineNum">     121 </span><span class="lineCov">         10 :         this-&gt;response = r;</span>
+<span class="lineNum">     122 </span>            :     }
+<a name="123"><span class="lineNum">     123 </span><span class="lineCov">         36 : }</span></a>
+<span class="lineNum">     124 </span>            : 
+<span class="lineNum">     125 </span><span class="lineCov">         10 : std::string HttpRequestConcrete::getConnToken(){</span>
+<span class="lineNum">     126 </span><span class="lineCov">         10 :     return this-&gt;getHeaderValue(&quot;conn_token&quot;);</span>
+<a name="127"><span class="lineNum">     127 </span>            : }</a>
+<span class="lineNum">     128 </span>            : 
+<span class="lineNum">     129 </span><span class="lineCov">         11 : std::string HttpRequestConcrete::getHeaderValue(std::string name){</span>
+<span class="lineNum">     130 </span><span class="lineCov">         11 :     int index = -1;</span>
+<span class="lineNum">     131 </span><span class="lineCov">         11 :     for(int i = 0; i &lt; MG_MAX_HTTP_HEADERS; ++i){ // si busco un header q no existe se rompe</span>
+<span class="lineNum">     132 </span><span class="lineCov">         11 :         std::string tmp = &quot;&quot;;</span>
+<span class="lineNum">     133 </span><span class="lineCov">         11 :         tmp.append(hmsg-&gt;header_names[i].p, hmsg-&gt;header_names[i].len);</span>
+<span class="lineNum">     134 </span><span class="lineCov">         11 :         if(tmp == name){</span>
+<span class="lineNum">     135 </span><span class="lineCov">         11 :             index = i;</span>
+<span class="lineNum">     136 </span><span class="lineCov">         11 :             break;</span>
+<span class="lineNum">     137 </span>            :         }
+<span class="lineNum">     138 </span><span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">     139 </span><span class="lineCov">         11 :     if(index == -1){</span>
+<span class="lineNum">     140 </span><span class="lineNoCov">          0 :         return &quot;&quot;;</span>
+<span class="lineNum">     141 </span>            :     }
+<span class="lineNum">     142 </span><span class="lineCov">         11 :     Server_Logger* log = Server_Logger::getInstance();</span>
+<span class="lineNum">     143 </span>            : 
+<span class="lineNum">     144 </span><span class="lineCov">         11 :     std::string tmp = &quot;&quot;;</span>
+<span class="lineNum">     145 </span><span class="lineCov">         11 :     tmp.append(hmsg-&gt;header_values[index].p, hmsg-&gt;header_values[index].len);</span>
+<span class="lineNum">     146 </span>            : 
+<span class="lineNum">     147 </span><span class="lineCov">         11 :     log-&gt;Log(&quot;Http request : recuperando header = &quot;+tmp,INFO);</span>
+<span class="lineNum">     148 </span>            : 
+<span class="lineNum">     149 </span><span class="lineCov">         11 :     return tmp;</span>
+<a name="150"><span class="lineNum">     150 </span>            : }</a>
+<span class="lineNum">     151 </span>            : 
+<span class="lineNum">     152 </span><span class="lineNoCov">          0 : std::string HttpRequestConcrete::getQueryCampo(std::string name){</span>
+<span class="lineNum">     153 </span><span class="lineNoCov">          0 :     std::string uri;</span>
+<span class="lineNum">     154 </span><span class="lineNoCov">          0 :     uri.append(hmsg-&gt;uri.p,hmsg-&gt;uri.len);</span>
+<span class="lineNum">     155 </span>            : 
+<span class="lineNum">     156 </span><span class="lineNoCov">          0 :     std::vector&lt;std::string&gt; parsed_queries;</span>
+<span class="lineNum">     157 </span>            : 
+<span class="lineNum">     158 </span><span class="lineNoCov">          0 :     std::stringstream input;</span>
+<span class="lineNum">     159 </span><span class="lineNoCov">          0 :     input &lt;&lt; uri;</span>
+<span class="lineNum">     160 </span>            : 
+<span class="lineNum">     161 </span><span class="lineNoCov">          0 :     std::string temp = &quot;&quot;;</span>
+<span class="lineNum">     162 </span><span class="lineNoCov">          0 :     std::string token = &quot;&quot;;</span>
+<span class="lineNum">     163 </span>            :     //ARREGLAR CASO VACIO
+<span class="lineNum">     164 </span><span class="lineNoCov">          0 :     while(getline(input, temp, '/')){</span>
+<span class="lineNum">     165 </span><span class="lineNoCov">          0 :         token.append(temp);</span>
+<span class="lineNum">     166 </span>            :         //std::cout &lt;&lt; &quot;lo q hay : &quot; &lt;&lt; token &lt;&lt; std::endl;
+<span class="lineNum">     167 </span><span class="lineNoCov">          0 :         if(token.compare(&quot;&quot;) == 0){</span>
+<span class="lineNum">     168 </span><span class="lineNoCov">          0 :             continue;</span>
+<span class="lineNum">     169 </span>            :         }
+<span class="lineNum">     170 </span><span class="lineNoCov">          0 :         parsed_queries.push_back(token);</span>
+<span class="lineNum">     171 </span><span class="lineNoCov">          0 :         token = &quot;&quot;;</span>
+<span class="lineNum">     172 </span>            : 
+<span class="lineNum">     173 </span>            :     }
+<span class="lineNum">     174 </span>            : 
+<span class="lineNum">     175 </span><span class="lineNoCov">          0 :     Server_Logger* log = Server_Logger::getInstance();</span>
+<span class="lineNum">     176 </span><span class="lineNoCov">          0 :      log-&gt;Log(&quot;Http request : recuperando campos para queries &quot;,INFO);</span>
+<span class="lineNum">     177 </span>            : 
+<span class="lineNum">     178 </span>            : 
+<span class="lineNum">     179 </span>            : 
+<span class="lineNum">     180 </span><span class="lineNoCov">          0 :     if (parsed_queries.size() &lt; 5){</span>
+<span class="lineNum">     181 </span><span class="lineNoCov">          0 :         return &quot;&quot;;</span>
+<span class="lineNum">     182 </span>            :     }
+<span class="lineNum">     183 </span>            : 
+<span class="lineNum">     184 </span><span class="lineNoCov">          0 :     if( name == &quot;word_to_search&quot;){</span>
+<span class="lineNum">     185 </span><span class="lineNoCov">          0 :         return parsed_queries[4];</span>
+<span class="lineNum">     186 </span>            :     }
+<span class="lineNum">     187 </span><span class="lineNoCov">          0 :     if (name == &quot;metadata_to_search&quot;){</span>
+<span class="lineNum">     188 </span><span class="lineNoCov">          0 :         return parsed_queries[3];</span>
+<span class="lineNum">     189 </span>            :     }
+<span class="lineNum">     190 </span><span class="lineNoCov">          0 :     return &quot;&quot;;</span>
+<a name="191"><span class="lineNum">     191 </span>            : }</a>
+<span class="lineNum">     192 </span>            : 
+<span class="lineNum">     193 </span><span class="lineCov">         17 : std::string HttpRequestConcrete::getCampo(std::string campo){</span>
+<span class="lineNum">     194 </span><span class="lineCov">         17 :     Value temp_val;</span>
+<span class="lineNum">     195 </span><span class="lineCov">         34 :     std::string temp_str_val;</span>
+<span class="lineNum">     196 </span><span class="lineCov">         17 :     std::string ret = JsonSerializer::get(json_body, campo, &quot;&quot;, temp_val, temp_str_val);</span>
+<span class="lineNum">     197 </span>            : 
+<span class="lineNum">     198 </span><span class="lineCov">         17 :     Server_Logger* log = Server_Logger::getInstance();</span>
+<span class="lineNum">     199 </span>            : 
+<span class="lineNum">     200 </span>            : 
+<span class="lineNum">     201 </span><span class="lineCov">         34 :     return ret;</span>
+<span class="lineNum">     202 </span>            :     //return json_body[campo].toStyledString();
+<a name="203"><span class="lineNum">     203 </span>            : }</a>
+<span class="lineNum">     204 </span>            : 
+<span class="lineNum">     205 </span><span class="lineCov">          2 : std::string HttpRequestConcrete::getCampoDeArray(std::string campo, int index){</span>
+<span class="lineNum">     206 </span><span class="lineCov">          2 :     Value def(&quot;&quot;);</span>
+<span class="lineNum">     207 </span><span class="lineCov">          4 :     Value res = json_body[campo].get(index, def);</span>
+<span class="lineNum">     208 </span><span class="lineCov">          4 :     std::string temp_str_value;</span>
+<span class="lineNum">     209 </span><span class="lineCov">          2 :     if(res == def){</span>
+<span class="lineNum">     210 </span><span class="lineNoCov">          0 :         return &quot;&quot;;</span>
+<span class="lineNum">     211 </span>            :     }
+<span class="lineNum">     212 </span>            : 
+<span class="lineNum">     213 </span><span class="lineCov">          4 :     std::string ret = JsonSerializer::get(json_body[campo], index, &quot;&quot;, def, temp_str_value);</span>
+<span class="lineNum">     214 </span><span class="lineCov">          4 :     return ret;</span>
+<span class="lineNum">     215 </span>            :     //return res.toStyledString();
+<a name="216"><span class="lineNum">     216 </span>            : }</a>
+<span class="lineNum">     217 </span>            : 
+<span class="lineNum">     218 </span><span class="lineCov">        125 : std::string HttpRequestConcrete::getUri(){</span>
+<span class="lineNum">     219 </span><span class="lineCov">        125 :     std::string uri = &quot;&quot;;</span>
+<span class="lineNum">     220 </span><span class="lineCov">        125 :     uri.append(hmsg-&gt;uri.p, hmsg-&gt;uri.len);</span>
+<span class="lineNum">     221 </span><span class="lineCov">        125 :     Server_Logger* log = Server_Logger::getInstance();</span>
+<span class="lineNum">     222 </span><span class="lineCov">        125 :     log-&gt;Log(&quot;Http request : recuperando uri = &quot;+uri,INFO);</span>
+<span class="lineNum">     223 </span>            : 
+<span class="lineNum">     224 </span><span class="lineCov">        125 :     return uri;</span>
+<a name="225"><span class="lineNum">     225 </span>            : }</a>
+<span class="lineNum">     226 </span>            : 
+<span class="lineNum">     227 </span><span class="lineCov">        104 : void HttpRequestConcrete::getUriParsed(std::vector&lt;std::string&gt;* parsed){</span>
+<span class="lineNum">     228 </span><span class="lineCov">        104 :     std::stringstream input;</span>
+<span class="lineNum">     229 </span><span class="lineCov">        208 :     std::string uri = this-&gt;getUri();</span>
+<span class="lineNum">     230 </span><span class="lineCov">        104 :     input &lt;&lt; uri;</span>
+<span class="lineNum">     231 </span>            : 
+<span class="lineNum">     232 </span><span class="lineCov">        208 :     std::string temp = &quot;&quot;;</span>
+<span class="lineNum">     233 </span><span class="lineCov">        208 :     std::string token = &quot;&quot;;</span>
+<span class="lineNum">     234 </span><span class="lineCov">        549 :     while(getline(input, temp, '/')){</span>
+<span class="lineNum">     235 </span><span class="lineCov">        341 :         token.append(temp);</span>
+<span class="lineNum">     236 </span><span class="lineCov">        341 :         if(token.compare(&quot;&quot;) == 0){</span>
+<span class="lineNum">     237 </span><span class="lineCov">         96 :             continue;</span>
+<span class="lineNum">     238 </span>            :         }
+<span class="lineNum">     239 </span><span class="lineCov">        245 :         parsed-&gt;push_back(token);</span>
+<span class="lineNum">     240 </span><span class="lineCov">        245 :         token = &quot;&quot;;</span>
+<span class="lineNum">     241 </span><span class="lineCov">        104 :     }</span>
+<a name="242"><span class="lineNum">     242 </span><span class="lineCov">        104 : }</span></a>
+<span class="lineNum">     243 </span>            : 
+<span class="lineNum">     244 </span><span class="lineCov">          3 : void HttpRequestConcrete::addValueToBody(std::string name, std::string val){</span>
+<span class="lineNum">     245 </span><span class="lineCov">          3 :     JsonSerializer serializer;</span>
+<span class="lineNum">     246 </span><span class="lineCov">          3 :     serializer.addValueToObject(response, name, val);</span>
+<span class="lineNum">     247 </span><span class="lineCov">          3 : }</span>
+<a name="248"><span class="lineNum">     248 </span>            : </a>
+<span class="lineNum">     249 </span>            : 
+<span class="lineNum">     250 </span><span class="lineCov">         34 : unsigned int HttpRequestConcrete::getStatusCode(){</span>
+<span class="lineNum">     251 </span><span class="lineCov">         34 :     return this-&gt;statusCode;</span>
+<a name="252"><span class="lineNum">     252 </span>            : }</a>
+<span class="lineNum">     253 </span>            : 
+<span class="lineNum">     254 </span><span class="lineCov">         26 : int HttpRequestConcrete::getUriCantCampos(){</span>
+<span class="lineNum">     255 </span><span class="lineCov">         26 :     std::vector&lt;std::string&gt; parsed;</span>
+<span class="lineNum">     256 </span><span class="lineCov">         26 :     getUriParsed(&amp;parsed);</span>
+<span class="lineNum">     257 </span><span class="lineCov">         26 :     return parsed.size();</span>
+<a name="258"><span class="lineNum">     258 </span>            : }</a>
+<span class="lineNum">     259 </span>            : 
+<span class="lineNum">     260 </span><span class="lineCov">         38 : HttpRequestConcrete::UriField HttpRequestConcrete::getUriParsedByIndex(int index){</span>
+<span class="lineNum">     261 </span><span class="lineCov">         38 :     std::vector&lt;std::string&gt; parsed;</span>
+<span class="lineNum">     262 </span><span class="lineCov">         38 :     getUriParsed(&amp;parsed);</span>
+<span class="lineNum">     263 </span><span class="lineCov">         38 :     if((index &gt;= parsed.size()) || (index &lt; 0)){</span>
+<span class="lineNum">     264 </span><span class="lineNoCov">          0 :         return INVALID_URI_FIELD;</span>
+<span class="lineNum">     265 </span>            :     }
+<span class="lineNum">     266 </span><span class="lineCov">         76 :     std::string field = parsed[index];</span>
+<span class="lineNum">     267 </span>            : 
+<span class="lineNum">     268 </span><span class="lineCov">         38 :     Server_Logger* log = Server_Logger::getInstance();</span>
+<span class="lineNum">     269 </span>            : 
+<span class="lineNum">     270 </span><span class="lineCov">         38 :     log-&gt;Log(&quot;Http request : recuperando uri por indice = &quot;+field,INFO);</span>
+<span class="lineNum">     271 </span>            : 
+<span class="lineNum">     272 </span><span class="lineCov">         38 :     if(field.compare(&quot;users&quot;) == 0){</span>
+<span class="lineNum">     273 </span><span class="lineCov">         12 :         return USERS;</span>
+<span class="lineNum">     274 </span><span class="lineCov">         26 :     } else if (field.compare(&quot;sessions&quot;) == 0){</span>
+<span class="lineNum">     275 </span><span class="lineCov">          6 :         return SESSIONS;</span>
+<span class="lineNum">     276 </span><span class="lineCov">         20 :     } else if (field.compare(&quot;search&quot;) == 0){</span>
+<span class="lineNum">     277 </span><span class="lineNoCov">          0 :         return SEARCH;</span>
+<span class="lineNum">     278 </span><span class="lineCov">         20 :     }else if (field.compare(&quot;profile&quot;) == 0){</span>
+<span class="lineNum">     279 </span><span class="lineCov">          1 :         return PROFILE;</span>
+<span class="lineNum">     280 </span><span class="lineCov">         19 :     } else if (field.compare(&quot;metadata&quot;) == 0){</span>
+<span class="lineNum">     281 </span><span class="lineNoCov">          0 :         return METADATA;</span>
+<span class="lineNum">     282 </span><span class="lineCov">         19 :     } else if (field.compare(&quot;addFriend&quot;) == 0){</span>
+<span class="lineNum">     283 </span><span class="lineCov">          1 :         return ADD_FRIEND;</span>
+<span class="lineNum">     284 </span><span class="lineCov">         18 :     } else if (field.compare(&quot;deleteFriend&quot;) == 0){</span>
+<span class="lineNum">     285 </span><span class="lineNoCov">          0 :         return DELETE_FRIEND;</span>
+<span class="lineNum">     286 </span><span class="lineCov">         18 :     } else if (field.compare(&quot;like&quot;) == 0){</span>
+<span class="lineNum">     287 </span><span class="lineCov">          2 :         return LIKE;</span>
+<span class="lineNum">     288 </span><span class="lineCov">         16 :     } else if (field.compare(&quot;acceptFriend&quot;) == 0){</span>
+<span class="lineNum">     289 </span><span class="lineCov">          1 :         return ACCEPT_FRIEND;</span>
+<span class="lineNum">     290 </span><span class="lineCov">         15 :     } else if (field.compare(&quot;job&quot;) == 0){</span>
+<span class="lineNum">     291 </span><span class="lineCov">          2 :         return JOB;</span>
+<span class="lineNum">     292 </span><span class="lineCov">         13 :     } else if (field.compare(&quot;skill&quot;) == 0){</span>
+<span class="lineNum">     293 </span><span class="lineCov">          4 :         return SKILL;</span>
+<span class="lineNum">     294 </span><span class="lineCov">          9 :     } else if (field.compare(&quot;top&quot;) == 0){</span>
+<span class="lineNum">     295 </span><span class="lineCov">          2 :         return TOP;</span>
+<span class="lineNum">     296 </span><span class="lineCov">          7 :    } else if (field.compare(&quot;top_skill&quot;) == 0){</span>
+<span class="lineNum">     297 </span><span class="lineCov">          2 :         return TOP_SKILL;</span>
+<span class="lineNum">     298 </span><span class="lineCov">          5 :    } else if (field.compare(&quot;top_job&quot;) == 0){</span>
+<span class="lineNum">     299 </span><span class="lineCov">          1 :         return TOP_JOB;</span>
+<span class="lineNum">     300 </span><span class="lineCov">          4 :    } else if (field.compare(&quot;chat&quot;) == 0){</span>
+<span class="lineNum">     301 </span><span class="lineCov">          2 :         return CHAT;</span>
+<span class="lineNum">     302 </span>            :    } else {
+<span class="lineNum">     303 </span><span class="lineCov">          2 :         return INVALID_URI_FIELD;</span>
+<span class="lineNum">     304 </span><span class="lineCov">         38 :    }</span>
+<a name="305"><span class="lineNum">     305 </span>            : }</a>
+<span class="lineNum">     306 </span>            : 
+<span class="lineNum">     307 </span><span class="lineCov">         23 : std::string HttpRequestConcrete::getUsername(){</span>
+<span class="lineNum">     308 </span><span class="lineCov">         23 :     return this-&gt;getUriStringParsedByIndex(1);</span>
+<a name="309"><span class="lineNum">     309 </span>            : }</a>
+<span class="lineNum">     310 </span>            : 
+<span class="lineNum">     311 </span><span class="lineCov">         39 : std::string HttpRequestConcrete::getUriStringParsedByIndex(int index){</span>
+<span class="lineNum">     312 </span><span class="lineCov">         39 :     std::vector&lt;std::string&gt; parsed;</span>
+<span class="lineNum">     313 </span><span class="lineCov">         39 :     getUriParsed(&amp;parsed);</span>
+<span class="lineNum">     314 </span>            : 
+<span class="lineNum">     315 </span><span class="lineCov">         39 :     if(index &gt; parsed.size()-1 || index &lt; 0){</span>
+<span class="lineNum">     316 </span><span class="lineNoCov">          0 :         return &quot;&quot;;</span>
+<span class="lineNum">     317 </span>            :     }
+<span class="lineNum">     318 </span><span class="lineCov">         78 :     std::string field = parsed[index];</span>
+<span class="lineNum">     319 </span><span class="lineCov">         78 :     return field;</span>
+<a name="320"><span class="lineNum">     320 </span>            : }</a>
+<span class="lineNum">     321 </span>            : 
+<span class="lineNum">     322 </span><span class="lineCov">         20 : HttpRequestConcrete::UriType HttpRequestConcrete::getUriType(){</span>
+<span class="lineNum">     323 </span><span class="lineCov">         20 :     std::string uri = this-&gt;getUri();</span>
+<span class="lineNum">     324 </span><span class="lineCov">         20 :     if(uri[uri.size()-1] == '/'){</span>
+<span class="lineNum">     325 </span><span class="lineCov">          6 :         return COLLECTION_URI;</span>
+<span class="lineNum">     326 </span>            :     }
+<span class="lineNum">     327 </span><span class="lineCov">         14 :     return ELEMENT_URI;</span>
+<a name="328"><span class="lineNum">     328 </span>            : }</a>
+<span class="lineNum">     329 </span>            : 
+<span class="lineNum">     330 </span><span class="lineCov">         23 : HttpRequestConcrete::MethodType HttpRequestConcrete::getMethod(){</span>
+<span class="lineNum">     331 </span><span class="lineCov">         23 :     std::string method = &quot;&quot;;</span>
+<span class="lineNum">     332 </span><span class="lineCov">         23 :     method.append(hmsg-&gt;method.p, hmsg-&gt;method.len);</span>
+<span class="lineNum">     333 </span><span class="lineCov">         23 :     Server_Logger* log = Server_Logger::getInstance();</span>
+<span class="lineNum">     334 </span><span class="lineCov">         23 :     log-&gt;Log(&quot;Http request : recuperando uri por indice = &quot;+method,INFO);</span>
+<span class="lineNum">     335 </span>            : 
+<span class="lineNum">     336 </span><span class="lineCov">         23 :     if(method.compare(&quot;POST&quot;) == 0){</span>
+<span class="lineNum">     337 </span><span class="lineCov">          7 :         return POST;</span>
+<span class="lineNum">     338 </span><span class="lineCov">         16 :     } else if (method.compare(&quot;GET&quot;) == 0){</span>
+<span class="lineNum">     339 </span><span class="lineCov">          9 :         return GET;</span>
+<span class="lineNum">     340 </span><span class="lineCov">          7 :     } else if (method.compare(&quot;PUT&quot;) == 0){</span>
+<span class="lineNum">     341 </span><span class="lineCov">          2 :         return PUT;</span>
+<span class="lineNum">     342 </span><span class="lineCov">          5 :     } else if (method.compare(&quot;DELETE&quot;) == 0){</span>
+<span class="lineNum">     343 </span><span class="lineCov">          5 :         return DELETE;</span>
+<span class="lineNum">     344 </span>            :     } else {
+<a name="345"><span class="lineNum">     345 </span><span class="lineNoCov">          0 :         return INVALID_METHOD;</span></a>
+<span class="lineNum">     346 </span><span class="lineCov">         23 :     }</span>
+<span class="lineNum">     347 </span><span class="lineCov">          3 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
