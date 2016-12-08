@@ -42,14 +42,14 @@ size_t HerokuComHandler::matiMethodComeback(char * data, size_t size, size_t nme
     return static_cast<HerokuComHandler*>(p)->write_data(data, size, nmemb,datax);
 }
 
-
+/*
 char* HerokuComHandler::POST(char* jason,char* statham)
 {
     CURL *curl;
 
     struct url_data data;
     data.size = 0;
-    data.data = (char*) malloc(4096); /* reasonable size initial buffer */
+    data.data = (char*) malloc(4096); 
     if(NULL == data.data) {
         fprintf(stderr, "Failed to allocate memory.\n");
         return NULL;
@@ -95,7 +95,7 @@ char* HerokuComHandler::DELETE(char* statham)
 
     struct url_data data;
     data.size = 0;
-    data.data = (char*) malloc(4096); /* reasonable size initial buffer */
+    data.data = (char*) malloc(4096); 
     if(NULL == data.data) {
         fprintf(stderr, "Failed to allocate memory.\n");
         return NULL;
@@ -134,7 +134,7 @@ char* HerokuComHandler::DELETE(char* statham)
     }
     return data.data;
 }
-
+*/
 char* HerokuComHandler::GET(char* url) {
     CURL *curl;
 
