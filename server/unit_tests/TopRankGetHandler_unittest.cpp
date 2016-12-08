@@ -6,8 +6,8 @@
 #include "UserMetadata.h"
 using namespace std;
 
-/*TEST(TopRankGetHandlerTests, TopRankGetOK){
-	Database* db = new DatabaseMockRAM;
+TEST(TopRankGetHandlerTests, TopRankGetOK){
+	/*Database* db = new DatabaseMockRAM;
 	TokenAuthenticator* tk = new TokenAuthenticator;
 	string token = tk->createToken("gonzalo");
 	TopRankGetHandler handler(db, tk);
@@ -32,5 +32,5 @@ using namespace std;
 	EXPECT_FALSE(req.getStatusCode() == HttpRequest::OK);
 
 	delete_http_message(hmsg);
-	delete conn;
-}*/
+	delete conn;*/
+}
