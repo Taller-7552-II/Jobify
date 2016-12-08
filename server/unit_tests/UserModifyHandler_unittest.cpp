@@ -5,6 +5,8 @@
 #include "User.h"
 #include "UserMetadata.h"
 
+using namespace std;
+
 TEST(UserModifyTests, ModifyUserOK){
 	Database* db = new DatabaseMockRAM;
 	TokenAuthenticator* tk = new TokenAuthenticator;
