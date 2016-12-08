@@ -18,7 +18,7 @@ TEST(TopJobHandlerTests, GetTopJobsGeneralOK){
 	vector<string> header_values;
 	header_values.push_back(token);
 	struct mg_connection* conn = new struct mg_connection;
-	struct http_message* hmsg = new_http_message("GET", "/top/", "", &header_names, &header_values);
+	struct http_message* hmsg = new_http_message("GET", "/top/software", "", &header_names, &header_values);
 
 	User user(db);
 	user.setUsername("gonzalo");
@@ -47,7 +47,7 @@ TEST(TopJobHandlerTests, GetTopSkillOK){
 	vector<string> header_values;
 	header_values.push_back(token);
 	struct mg_connection* conn = new struct mg_connection;
-	struct http_message* hmsg = new_http_message("GET", "/skill/", "", &header_names, &header_values);
+	struct http_message* hmsg = new_http_message("GET", "/skill/software", "", &header_names, &header_values);
 
 	User user(db);
 	user.setUsername("gonzalo");
@@ -76,7 +76,7 @@ TEST(TopJobHandlerTests, GetTopJobsOK){
 	vector<string> header_values;
 	header_values.push_back(token);
 	struct mg_connection* conn = new struct mg_connection;
-	struct http_message* hmsg = new_http_message("GET", "/top_job/", "", &header_names, &header_values);
+	struct http_message* hmsg = new_http_message("GET", "/top_job/software", "", &header_names, &header_values);
 
 	User user(db);
 	user.setUsername("gonzalo");
@@ -105,7 +105,7 @@ TEST(TopJobHandlerTests, GetTopSkillsOK){
 	vector<string> header_values;
 	header_values.push_back(token);
 	struct mg_connection* conn = new struct mg_connection;
-	struct http_message* hmsg = new_http_message("GET", "/top_skill/", "", &header_names, &header_values);
+	struct http_message* hmsg = new_http_message("GET", "/top_skill/software", "", &header_names, &header_values);
 
 	User user(db);
 	user.setUsername("gonzalo");
