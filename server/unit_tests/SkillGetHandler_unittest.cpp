@@ -7,7 +7,7 @@
 
 using namespace std;
 
-TEST(SkillGetHandlerTests, UserGetSkillsOK){
+TEST(SkillGetHandlerTests, UserGetSkillsGeneralOK){
 	Database* db = new DatabaseMockRAM;
 	TokenAuthenticator* tk = new TokenAuthenticator;
 	string token = tk->createToken("gonzalo");
@@ -35,3 +35,4 @@ TEST(SkillGetHandlerTests, UserGetSkillsOK){
 	delete_http_message(hmsg);
 	delete conn;
 }
+
