@@ -7,7 +7,7 @@
 
 using namespace std;
 
-TEST(TopJobHandlerTests, GetTopJobsGeneralOK){
+TEST(TopJobHandlerTests, GetTopJobsWrongUri){
 	Database* db = new DatabaseMockRAM;
 	TokenAuthenticator* tk = new TokenAuthenticator;
 	string token = tk->createToken("gonzalo");
@@ -36,7 +36,7 @@ TEST(TopJobHandlerTests, GetTopJobsGeneralOK){
 	delete conn;
 }
 
-TEST(TopJobHandlerTests, GetTopSkillOK){
+TEST(TopJobHandlerTests, GetTopSkillWrongUri){
 	Database* db = new DatabaseMockRAM;
 	TokenAuthenticator* tk = new TokenAuthenticator;
 	string token = tk->createToken("gonzalo");
@@ -88,7 +88,7 @@ TEST(TopJobHandlerTests, GetTopJobsOK){
 	req.init(conn, hmsg);
 
 	handler.handle(req);
-	EXPECT_FALSE(req.getStatusCode() == HttpRequest::OK);
+	EXPECT_TRUE(req.getStatusCode() == HttpRequest::OK);
 
 	delete_http_message(hmsg);
 	delete conn;
@@ -117,7 +117,7 @@ TEST(TopJobHandlerTests, GetTopSkillsOK){
 	req.init(conn, hmsg);
 
 	handler.handle(req);
-	EXPECT_FALSE(req.getStatusCode() == HttpRequest::OK);
+	EXPECT_TRUE(req.getStatusCode() == HttpRequest::OK);
 
 	delete_http_message(hmsg);
 	delete conn;
