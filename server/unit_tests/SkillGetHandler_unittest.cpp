@@ -30,7 +30,7 @@ TEST(SkillGetHandlerTests, UserGetSkillsGeneralOK){
 	req.init(conn, hmsg);
 
 	handler.handle(req);
-	EXPECT_FALSe(req.getStatusCode() == HttpRequest::OK);
+	EXPECT_FALSE(req.getStatusCode() == HttpRequest::OK);
 
 	delete_http_message(hmsg);
 	delete conn;
