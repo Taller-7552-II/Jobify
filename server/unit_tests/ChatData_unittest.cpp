@@ -3,7 +3,7 @@
 #include "DatabaseMockRAM.h"
 #include "UserMetadata.h"
 
-/*TEST(ChatDataTest, GettersYSettersTest){
+TEST(ChatDataTest, GettersYSettersTest){
 	DatabaseMockRAM* db = new DatabaseMockRAM;
 	ChatData chatData(db);
 	
@@ -69,4 +69,4 @@ TEST(UserTest, BorrarChatDataBorraMetadata){
 	um.setUsername("matias");
 	s = um.DBget();
 	EXPECT_FALSE(s.ok());
-}*/
+}
