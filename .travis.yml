@@ -4,11 +4,11 @@ language: cpp
 
 services:
   - docker
-  
+ 
 before_install:
-- docker pull matisyo/jobify-docker:latest
-- docker run -d -p 127.0.0.1:80:4567 matisyo/jobify-docker /bin/sh -c "cd /home/travis; rm -rf Jobify;./installer_ducker.sh;"
-- docker ps -l
-
-
-
+  - docker build -t jobifiando .
+  - docker images 
+  
+script:
+  - docker run --name jovifier -d -p 8000:8000 jobifiando;
+  - docker ps -l
