@@ -4,7 +4,7 @@
 Trabajo Practico - Taller de Programacion II - 2do cuatrimestre 2016
 
 ##Integrantes
-* [Corballo Matias](https://github.com/matisyo) 93762
+* [Carballo Matias](https://github.com/matisyo) 93762
 * [Guzzardi Gonzalo](https://github.com/gonzaloguzzardi) 94258
 * [Marshall Juan Patricio](https://github.com/JuanPatricioMarshall) 95471
 
